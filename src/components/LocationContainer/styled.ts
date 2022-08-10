@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   color: ${({ theme }) => theme.COLOR.WHITE};
 `
 export const City = styled.h2`
+  text-align: right;
   font-size: ${({ theme }) => theme.FONT_SIZE.L};
   margin-bottom: ${({ theme }) => theme.SPACES[15]}px;
   cursor: pointer;
@@ -15,6 +16,7 @@ export const City = styled.h2`
 export const Country = styled.h3`
   font-size: ${({ theme }) => theme.FONT_SIZE.M};
   user-select: none;
+  text-align: right;
 `
 
 interface IInputCity {
@@ -27,7 +29,7 @@ export const InputCity = styled.input.attrs<IInputCity>({
   text-align: right;
   background: none;
   width: auto;
-  height: ${({ theme }) => theme.FONT_SIZE.L};
+  height: ${({ theme }) => theme.LINE_HEIGHT.L};
   color: ${({ theme }) => theme.COLOR.LIGHT_GREY};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT[700]};
   font-size: ${({ theme }) => theme.FONT_SIZE.L};

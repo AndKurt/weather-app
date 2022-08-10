@@ -1,10 +1,24 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { City, Country, InputCity, Wrapper } from './styled'
 import useOnclickOutside from 'react-cool-onclickoutside'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
+import { fetchLocationByCityName } from '@store/actions/locationAction'
 
 export const LocationContainer = () => {
   const [isEditCity, setIsEditCity] = useState<boolean>(false)
-  const [cityName, setCityName] = useState<string>('Minsk')
+  const dispatch = useAppDispatch()
+  const { locationData } = useAppSelector((state) => state.locationReducer)
+  const [cityName, setCityName] = useState<string>(locationData?.city as string)
+
+  useEffect(() => {
+    setCityName(locationData?.city as string)
+  }, [locationData])
+
+  useEffect(() => {
+    if (cityName !== locationData?.city && !isEditCity) {
+      dispatch(fetchLocationByCityName(cityName))
+    }
+  }, [isEditCity])
 
   const handleOpenEdit = () => {
     setIsEditCity(true)
@@ -28,7 +42,7 @@ export const LocationContainer = () => {
       ) : (
         <InputCity defaultValue={cityName} ref={handleCloseEdit} onChange={handleRenameCity} autoFocus />
       )}
-      <Country>Belarus</Country>
+      <Country>{locationData?.country}</Country>
     </Wrapper>
   )
 }

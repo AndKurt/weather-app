@@ -1,14 +1,24 @@
-import React from 'react'
-import { Date, Format, Time, TimeBlock, Wrapper } from './styled'
+import { getFormatedDate, IFormatedDate } from '@utils/timeDate'
+import React, { useEffect, useState } from 'react'
+import { DateInfo, Format, Time, TimeBlock, Wrapper } from './styled'
 
 export const DateContainer = () => {
+  const [timeState, setTimeState] = useState<IFormatedDate>(() => getFormatedDate(new Date()))
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeState(getFormatedDate(new Date()))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <Wrapper>
       <TimeBlock>
-        <Time>12:30</Time>
-        <Format>pm</Format>
+        <Time>{timeState.time}</Time>
+        <Format>{timeState.format}</Format>
       </TimeBlock>
-      <Date>monday, 2 february 2015</Date>
+      <DateInfo>{timeState.date}</DateInfo>
     </Wrapper>
   )
 }

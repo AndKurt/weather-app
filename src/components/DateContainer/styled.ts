@@ -20,7 +20,7 @@ export const Format = styled.h3`
   line-height: ${({ theme }) => theme.LINE_HEIGHT.M};
   text-transform: uppercase;
 `
-export const Date = styled.h3`
+export const DateInfo = styled.h3`
   font-size: ${({ theme }) => theme.FONT_SIZE.M};
   line-height: ${({ theme }) => theme.LINE_HEIGHT.M};
   text-transform: capitalize;
