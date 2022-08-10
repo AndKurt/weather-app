@@ -1,5 +1,5 @@
 import { API_KEY, BASE_URL, GEO_BY_IP_URL } from '@constants/api'
-import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/api'
+import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/locationAPI'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 

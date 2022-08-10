@@ -1,4 +1,4 @@
-import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/api'
+import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/locationAPI'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { fetchLocationByCityName, fetchLocationByIP } from '@store/actions/locationAction'
 

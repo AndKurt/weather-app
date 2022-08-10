@@ -36,3 +36,10 @@ export const getFormatedDate = (currentDate: Date): IFormatedDate => {
   const date = getDateInfo(currentDate)
   return { time, format, date }
 }
+
+export const getNextWeekdayDate = (plusDayValue: number): string => {
+  const currentDate = new Date()
+  const date = new Date(currentDate.getTime() + plusDayValue * 24 * 60 * 60 * 1000)
+  const convertedDate = (date.getTime() / 1000).toFixed()
+  return convertedDate
+}
