@@ -43,3 +43,9 @@ export const getNextWeekdayDate = (plusDayValue: number): string => {
   const convertedDate = (date.getTime() / 1000).toFixed()
   return convertedDate
 }
+
+export const getWeekDay = (timestamp: number): string => {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const instance = new Date(timestamp * 1000)
+  return days[instance.getDay()]
+}

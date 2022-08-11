@@ -1,4 +1,6 @@
 import styled from 'styled-components/macro'
+import baseBg from '@assets/img/baseBg.jpg'
+import contenBg from '@assets/img/contenBg.jpg'
 
 export const Wrapper = styled.main`
   position: fixed;
@@ -9,7 +11,9 @@ export const Wrapper = styled.main`
   width: 100vw;
   height: 100vh;
   padding: ${({ theme }) => theme.SPACES[30]}px;
-  background: ${({ theme }) => theme.COLOR.WHITE};
+  background-image: url(${baseBg});
+  background-size: cover;
+  background-position: center;
 `
 
 export const Content = styled.div`
@@ -19,6 +23,8 @@ export const Content = styled.div`
   width: 100%;
   height: 80%;
   padding: ${({ theme }) => theme.SPACES[60]}px;
-  background: ${({ theme }) => theme.COLOR.LIGHT_BLUE};
   box-shadow: 0px 0px 33px 6px rgba(34, 60, 80, 0.6);
+  background-image: url(${contenBg});
+  background-size: cover;
+  background-position: center;
 `

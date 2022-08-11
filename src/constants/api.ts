@@ -8,6 +8,7 @@ export const API_KEY = {
 
 export const BASE_URL = {
   OPENWEATHERMAP: 'https://api.openweathermap.org',
+  OPENWEATHERMAP_IMG: ' http://openweathermap.org/img/wn',
   STORMGLASS: 'https://api.stormglass.io/v2/weather/point',
   POSITIONSTACK: 'http://api.positionstack.com/v1',
 }

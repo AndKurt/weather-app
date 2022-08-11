@@ -2,7 +2,7 @@ import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/loca
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { fetchLocationByCityName, fetchLocationByIP } from '@store/actions/locationAction'
 
-interface ILocationState {
+export interface ILocationState {
   locationData: ILocationIPResponce | null
   isLoading: boolean
   errorMsg: string

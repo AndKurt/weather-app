@@ -5,7 +5,7 @@ const COLOR = {
   LIGHT_BLUE: 'rgba(55.0, 55.0, 189.0, 1.0)',
   DARK_BLUE: 'rgba(35.0, 35.0, 76.0, 1.0)',
   LIGHT_GREY: 'rgba(152.0, 152.0, 156.0, 1)',
-  DARK_GREY: 'rgba(59.0, 59.0, 61.0, 0.3)',
+  DARK_GREY: 'rgba(59.0, 59.0, 61.0, 0.6)',
 }
 
 const SPINNER_COLORS = {
@@ -51,7 +51,7 @@ const SPACES = {
 
 // Width
 const WIDTH = {
-  MAX: '1920px',
+  MAX: '1200px',
   MIN: '300px',
   DATE_MAX: '30%',
   LOCATION_MAX: '30%',
