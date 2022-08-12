@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState, KeyboardEvent } from 'react'
 import { City, Country, InputCity, Wrapper } from './styled'
 import useOnclickOutside from 'react-cool-onclickoutside'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
@@ -28,6 +28,12 @@ export const LocationContainer = () => {
     setIsEditCity(false)
   })
 
+  const handleCloseEditByBtn = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setIsEditCity(false)
+    }
+  }
+
   const handleRenameCity = (e: ChangeEvent<HTMLInputElement>) => {
     const newCityName = e.target.value.trim()
     if (newCityName) {
@@ -40,7 +46,13 @@ export const LocationContainer = () => {
       {!isEditCity ? (
         <City onClick={handleOpenEdit}>{cityName}</City>
       ) : (
-        <InputCity defaultValue={cityName} ref={handleCloseEdit} onChange={handleRenameCity} autoFocus />
+        <InputCity
+          defaultValue={cityName}
+          ref={handleCloseEdit}
+          onChange={handleRenameCity}
+          onKeyDown={handleCloseEditByBtn}
+          autoFocus
+        />
       )}
       <Country>{locationData?.country}</Country>
     </Wrapper>

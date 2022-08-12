@@ -1,19 +1,22 @@
-import { IOpenweathermapStoreData, IOpenweatherResponse } from '@interfaces/openWeather'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
+
+import { IOpenweatherResponse } from '@interfaces/openWeather'
+import { IStormglassResponse } from '@interfaces/stormglass'
+import { IWeatherStoreData } from '@interfaces/weatherStore'
 import { fetchWeatherOpenweathermap, fetchWeatherStormglass } from '@store/actions/weatherAction'
-import { getTransformedDataOpenweather } from '@utils/weatherHelpers'
+import { getTransformedDataOpenweather, addDataToStormglassData, sortStormglassData } from '@utils/weatherHelpers'
 
 interface IWeatherState {
   isLoading: boolean
   errorMsg: string
-  //stormGlassData: IStormGlassData | null
-  openWeatherData: IOpenweathermapStoreData | null
+  stormGlassData: IWeatherStoreData | null
+  openWeatherData: IWeatherStoreData | null
 }
 
 const initialState: IWeatherState = {
   isLoading: false,
   errorMsg: '',
-  //stormGlassData: null,
+  stormGlassData: null,
   openWeatherData: null,
 }
 
@@ -23,7 +26,6 @@ const weatherSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchWeatherOpenweathermap.pending.type]: (state) => {
-      state.openWeatherData = null
       state.isLoading = true
       state.errorMsg = ''
     },
@@ -33,25 +35,24 @@ const weatherSlice = createSlice({
       state.errorMsg = ''
     },
     [fetchWeatherOpenweathermap.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.openWeatherData = null
       state.isLoading = false
       state.errorMsg = action.payload
     },
-    //[fetchWeatherStormglass.pending.type]: (state) => {
-    //  state.stormGlassData = null
-    //  state.isLoading = true
-    //  state.errorMsg = ''
-    //},
-    //[fetchWeatherStormglass.fulfilled.type]: (state, { payload }: PayloadAction<IStormGlassData>) => {
-    //  state.stormGlassData = payload
-    //  state.isLoading = false
-    //  state.errorMsg = ''
-    //},
-    //[fetchWeatherStormglass.rejected.type]: (state, action: PayloadAction<string>) => {
-    //  state.stormGlassData = null
-    //  state.isLoading = false
-    //  state.errorMsg = action.payload
-    //},
+    [fetchWeatherStormglass.pending.type]: (state) => {
+      state.isLoading = true
+      state.errorMsg = ''
+    },
+    [fetchWeatherStormglass.fulfilled.type]: (state, { payload }: PayloadAction<IStormglassResponse>) => {
+      if (state.openWeatherData) {
+        state.stormGlassData = addDataToStormglassData(sortStormglassData(payload), current(state.openWeatherData))
+      }
+      state.isLoading = false
+      state.errorMsg = ''
+    },
+    [fetchWeatherStormglass.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false
+      state.errorMsg = action.payload
+    },
   },
 })
 

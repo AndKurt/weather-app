@@ -77,27 +77,3 @@ export interface IOpenweatherResponse {
   current: Current
   daily: Daily[]
 }
-
-//-----------Openweathermap for Store---------
-interface IWeatherKey {
-  main: string
-  icon: string
-  description: string
-}
-
-interface ICurrentKey {
-  today: string
-  temp: number
-  weather: IWeatherKey
-}
-
-export interface IDaily {
-  weekDay: string
-  temp: number
-  weather: IWeatherKey
-}
-
-export interface IOpenweathermapStoreData {
-  current: ICurrentKey
-  daily: IDaily[]
-}

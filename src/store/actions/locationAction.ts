@@ -1,7 +1,8 @@
+import axios from 'axios'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+
 import { API_KEY, BASE_URL, GEO_BY_IP_URL } from '@constants/api'
 import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/locationAPI'
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
 
 export const fetchLocationByIP = createAsyncThunk('location/getLocationByIP', async (_, thunkApi) => {
   try {
