@@ -1,14 +1,14 @@
 import styled from 'styled-components/macro'
 
 export const Content = styled.p`
-  display: inline-block;
+  background: ${({ theme }) => theme.COLOR.DARK_BLUE};
   border-radius: 25px;
-  user-select: none;
-  text-transform: uppercase;
+  color: ${({ theme }) => theme.COLOR.LIGHT_GREY};
+  display: inline-block;
+  font-size: ${({ theme }) => theme.FONT_SIZE.M};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT[700]};
   height: 32px;
   padding: ${({ theme }) => theme.SPACES[5]}px ${({ theme }) => theme.SPACES[10]}px;
-  font-size: ${({ theme }) => theme.FONT_SIZE.M};
-  color: ${({ theme }) => theme.COLOR.LIGHT_GREY};
-  background: ${({ theme }) => theme.COLOR.DARK_BLUE};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT[700]};
+  text-transform: uppercase;
+  user-select: none;
 `

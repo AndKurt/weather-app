@@ -1,5 +1,7 @@
-import { getFormatedDate, IFormatedDate } from '@utils/timeDate'
 import React, { useEffect, useState } from 'react'
+
+import { getFormatedDate, IFormatedDate } from '@utils/timeDate'
+
 import { DateInfo, Format, Time, TimeBlock, Wrapper } from './styled'
 
 export const DateContainer = () => {

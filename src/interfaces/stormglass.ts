@@ -1,4 +1,4 @@
-//-----------Stormglass API Responce---------
+// -----------Stormglass API Responce---------
 interface AirTemperature {
   sg: number
 }
@@ -25,7 +25,7 @@ export interface IStormglassResponse {
   meta: Meta
 }
 
-//-----------Openweathermap sorted data---------
+// -----------Openweathermap sorted data---------
 export interface IStormglassSorted {
   current: {
     today: string

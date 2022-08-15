@@ -60,7 +60,7 @@ const WIDTH = {
 // Height
 const HEIGHT = {}
 
-//export interface ITheme {
+// export interface ITheme {
 //  COLOR: {
 //    WHITE: string
 //    BLACK: string
@@ -84,7 +84,7 @@ const HEIGHT = {}
 //    L: string
 //    XL: string
 //  }
-//}
+// }
 
 export const theme = {
   COLOR,

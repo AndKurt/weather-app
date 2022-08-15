@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useEffect, useState, KeyboardEvent } from 'react'
-import { City, Country, InputCity, Wrapper } from './styled'
 import useOnclickOutside from 'react-cool-onclickoutside'
-import { useAppDispatch, useAppSelector } from '@store/hooks'
+
 import { fetchLocationByCityName } from '@store/actions/locationAction'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
+
+import { City, Country, InputCity, Wrapper } from './styled'
 
 export const LocationContainer = () => {
   const [isEditCity, setIsEditCity] = useState<boolean>(false)

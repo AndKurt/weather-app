@@ -30,11 +30,19 @@ const getDateInfo = (currentDate: Date): string => {
 }
 
 export const getFormatedDate = (currentDate: Date): IFormatedDate => {
-  const formatedTime = currentDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  const formatedTime = currentDate.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  })
   const time = formatedTime.slice(0, formatedTime.length - 2)
   const format = formatedTime.slice(-2)
   const date = getDateInfo(currentDate)
-  return { time, format, date }
+  return {
+    time,
+    format,
+    date,
+  }
 }
 
 export const getNextWeekdayDate = (plusDayValue: number): string => {

@@ -1,13 +1,13 @@
 import styled from 'styled-components/macro'
 
 export const Wrapper = styled.div`
-  width: ${({ theme }) => theme.WIDTH.DATE_MAX};
   color: ${({ theme }) => theme.COLOR.WHITE};
+  width: ${({ theme }) => theme.WIDTH.DATE_MAX};
 `
 
 export const TimeBlock = styled.div`
-  display: flex;
   align-items: flex-end;
+  display: flex;
   margin-bottom: ${({ theme }) => theme.SPACES[15]}px;
 `
 

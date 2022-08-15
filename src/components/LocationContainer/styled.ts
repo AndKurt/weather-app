@@ -1,22 +1,22 @@
 import styled from 'styled-components/macro'
 
 export const Wrapper = styled.div`
+  align-items: flex-end;
+  color: ${({ theme }) => theme.COLOR.WHITE};
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   width: ${({ theme }) => theme.WIDTH.LOCATION_MAX};
-  color: ${({ theme }) => theme.COLOR.WHITE};
 `
 export const City = styled.h2`
-  text-align: right;
+  cursor: pointer;
   font-size: ${({ theme }) => theme.FONT_SIZE.L};
   margin-bottom: ${({ theme }) => theme.SPACES[15]}px;
-  cursor: pointer;
+  text-align: right;
 `
 export const Country = styled.h3`
   font-size: ${({ theme }) => theme.FONT_SIZE.M};
-  user-select: none;
   text-align: right;
+  user-select: none;
 `
 
 interface IInputCity {

@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { API_NAME } from '@constants/common'
-import { IApiOptions } from '@interfaces/apiOptions'
-import { apiOptions } from '@constants/api'
 import baseBg from '@assets/img/baseBg.jpg'
 import contenBg from '@assets/img/contenBg.jpg'
-import { fetchBackgrounds } from '@store/actions/generalAction'
+import { apiOptions } from '@constants/api'
+import { IApiOptions } from '@interfaces/apiOptions'
 import { IBackgrounds, IUnsplashResponse } from '@interfaces/unsplash'
+import { fetchBackgrounds } from '@store/actions/generalAction'
 
 interface IInitialState {
   isLoading: boolean
@@ -41,7 +40,10 @@ const generalSlice = createSlice({
     [fetchBackgrounds.fulfilled.type]: (state, { payload }: PayloadAction<IUnsplashResponse>) => {
       const bg1 = payload.results[0].urls.full
       const bg2 = payload.results[1].urls.full
-      state.currentBackground = { bg1: bg1, bg2: bg2 }
+      state.currentBackground = {
+        bg1,
+        bg2,
+      }
       state.isLoading = false
       state.errorMsg = ''
     },

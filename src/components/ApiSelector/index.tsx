@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Select, { SingleValue } from 'react-select'
 
 import { apiOptions } from '@constants/api'

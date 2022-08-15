@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 import { API_KEY, BASE_URL, GEO_BY_IP_URL } from '@constants/api'
 import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/locationAPI'
@@ -18,11 +18,11 @@ export const fetchLocationByCityName = createAsyncThunk(
   async (cityName: string, thunkApi) => {
     try {
       const response = await axios.get<ILocationCityNameResponce>(
-        `${BASE_URL.POSITIONSTACK}/forward?access_key=${API_KEY.POSITIONSTACK}&query=${cityName}`
+        `${BASE_URL.POSITIONSTACK}/forward?access_key=${API_KEY.POSITIONSTACK}&query=${cityName}`,
       )
       return response.data
     } catch (error) {
       return thunkApi.rejectWithValue('Nothing found')
     }
-  }
+  },
 )

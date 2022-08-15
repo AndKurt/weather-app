@@ -2,8 +2,8 @@ import styled from 'styled-components/macro'
 
 export const Wrapper = styled.div`
   align-items: center;
-  display: flex;
   color: ${({ theme }) => theme.COLOR.WHITE};
+  display: flex;
 `
 
 export const TextContainer = styled.div`
@@ -11,8 +11,8 @@ export const TextContainer = styled.div`
 `
 
 export const WeatherImg = styled.img`
-  width: 200px;
   height: 200px;
+  width: 200px;
 `
 
 export const Temperature = styled.h2`

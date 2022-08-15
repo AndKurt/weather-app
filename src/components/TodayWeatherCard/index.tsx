@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { Label } from '@components/Label'
-import { Temperature, TextContainer, WeatherImg as WeatherImg, Wrapper } from './styled'
 import { BASE_URL } from '@constants/api'
 import { useAppSelector } from '@store/hooks'
+
+import { Temperature, TextContainer, WeatherImg, Wrapper } from './styled'
 
 export const TodayWeatherCard = () => {
   const { openWeatherData } = useAppSelector((state) => state.weatherReducer)
@@ -14,7 +16,10 @@ export const TodayWeatherCard = () => {
       <WeatherImg src={`${BASE_URL.OPENWEATHERMAP_IMG}/${iconName}@2x.png`} alt="weater-icon" />
       <TextContainer>
         <Label text="Today" />
-        <Temperature>{temperature}&deg;</Temperature>
+        <Temperature>
+          {temperature}
+          &deg;
+        </Temperature>
       </TextContainer>
     </Wrapper>
   )

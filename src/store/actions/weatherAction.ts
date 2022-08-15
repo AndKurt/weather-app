@@ -5,6 +5,7 @@ import { DAYS_AMOUNT, API_KEY, BASE_URL } from '@constants/index'
 import { IOpenweatherResponse } from '@interfaces/openWeather'
 import { IStormglassResponse } from '@interfaces/stormglass'
 import { getNextWeekdayDate } from '@utils/timeDate'
+
 import { RootState } from '..'
 
 export const fetchWeatherOpenweathermap = createAsyncThunk<IOpenweatherResponse | string>(
@@ -15,14 +16,14 @@ export const fetchWeatherOpenweathermap = createAsyncThunk<IOpenweatherResponse 
       const latitude = locationReducer.locationData?.lat as string
       const lonngitude = locationReducer.locationData?.lon as string
       const response = await axios.get<IOpenweatherResponse>(
-        `${BASE_URL.OPENWEATHERMAP}/data/2.5/onecall?lat=${latitude}&lon=${lonngitude}&exclude=minutely,hourly,alerts&appid=${API_KEY.OPENWEATHERMAP}&units=metric`
+        `${BASE_URL.OPENWEATHERMAP}/data/2.5/onecall?lat=${latitude}&lon=${lonngitude}&exclude=minutely,hourly,alerts&appid=${API_KEY.OPENWEATHERMAP}&units=metric`,
       )
 
       return response.data
     } catch (error) {
       return thunkApi.rejectWithValue('Ooops... Try to use another API service')
     }
-  }
+  },
 )
 
 export const fetchWeatherStormglass = createAsyncThunk<IStormglassResponse | string>(
@@ -36,16 +37,12 @@ export const fetchWeatherStormglass = createAsyncThunk<IStormglassResponse | str
 
       const response = await axios.get<IStormglassResponse>(
         `${BASE_URL.STORMGLASS}?lat=${latitude}&lng=${longitude}&end=${nextDay}&params=airTemperature&source=sg`,
-        {
-          headers: {
-            Authorization: API_KEY.STORMGLASS,
-          },
-        }
+        { headers: { Authorization: API_KEY.STORMGLASS } },
       )
 
       return response.data
     } catch (error) {
       return thunkApi.rejectWithValue('Ooops... Try to use another API service')
     }
-  }
+  },
 )

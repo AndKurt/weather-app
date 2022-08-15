@@ -1,9 +1,11 @@
 import React from 'react'
-import { WeekDaysContainer, Wrapper } from './styled'
-import { useAppSelector } from '@store/hooks'
-import { TodayWeatherCard } from '@components/TodayWeatherCard'
-import { NextWeatherCard } from '@components/NextWeatherCard'
+
 import { Loader } from '@components/Loader'
+import { NextWeatherCard } from '@components/NextWeatherCard'
+import { TodayWeatherCard } from '@components/TodayWeatherCard'
+import { useAppSelector } from '@store/hooks'
+
+import { WeekDaysContainer, Wrapper } from './styled'
 
 export const WeatherContainer = () => {
   const { isLoading, openWeatherData } = useAppSelector((state) => state.weatherReducer)

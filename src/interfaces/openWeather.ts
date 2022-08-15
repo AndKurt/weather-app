@@ -1,4 +1,4 @@
-//-----------Openweathermap API Responce---------
+// -----------Openweathermap API Responce---------
 interface Weather {
   id: number
   main: string

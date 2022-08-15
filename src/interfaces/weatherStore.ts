@@ -1,4 +1,4 @@
-//-----------Openweathermap for Store---------
+// -----------Openweathermap for Store---------
 interface IWeatherKey {
   main: string
   icon: string

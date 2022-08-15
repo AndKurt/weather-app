@@ -1,10 +1,9 @@
 import React from 'react'
+
 import { Spinner, Wrapper } from './styled'
 
-export const Loader = () => {
-  return (
-    <Wrapper>
-      <Spinner />
-    </Wrapper>
-  )
-}
+export const Loader = () => (
+  <Wrapper>
+    <Spinner />
+  </Wrapper>
+)
