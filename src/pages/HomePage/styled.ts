@@ -1,13 +1,14 @@
-import { IBackgrounds } from '@interfaces/unsplash'
 import styled from 'styled-components/macro'
 
+import { IBackgrounds } from '@interfaces/unsplash'
+
 interface IProps {
-  currentBackground: IBackgrounds
+  currentBackground?: IBackgrounds
 }
 
 export const Wrapper = styled.main<IProps>`
   align-items: center;
-  background-image: url(${({ currentBackground }) => currentBackground.bg1});
+  background-image: url(${({ currentBackground }) => currentBackground?.bg1});
   background-position: center;
   background-size: cover;
   display: flex;
@@ -20,7 +21,7 @@ export const Wrapper = styled.main<IProps>`
 `
 
 export const Content = styled.div<IProps>`
-  background-image: url(${({ currentBackground }) => currentBackground.bg2});
+  background-image: url(${({ currentBackground }) => currentBackground?.bg2});
   background-position: center;
   background-size: cover;
   box-shadow: 0px 0px 33px 6px rgba(34, 60, 80, 0.6);

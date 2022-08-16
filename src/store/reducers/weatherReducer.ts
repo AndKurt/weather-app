@@ -1,12 +1,8 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { IOpenweatherResponse } from '@interfaces/openWeather'
-import { IStormglassResponse } from '@interfaces/stormglass'
 import { IWeatherStoreData } from '@interfaces/weatherStore'
-import { fetchWeatherOpenweathermap, fetchWeatherStormglass } from '@store/actions/weatherAction'
-import { getTransformedDataOpenweather, addDataToStormglassData, sortStormglassData } from '@utils/weatherHelpers'
 
-interface IWeatherState {
+export interface IWeatherState {
   isLoading: boolean
   errorMsg: string
   stormGlassData: IWeatherStoreData | null
@@ -23,40 +19,42 @@ const initialState: IWeatherState = {
 const weatherSlice = createSlice({
   name: 'weather',
   initialState,
-  reducers: {},
-  extraReducers: {
-    [fetchWeatherOpenweathermap.pending.type]: (state) => {
+  reducers: {
+    getOpenweatherDataPending(state) {
       state.isLoading = true
       state.errorMsg = ''
     },
-    [fetchWeatherOpenweathermap.fulfilled.type]: (state, { payload }: PayloadAction<IOpenweatherResponse>) => {
-      state.openWeatherData = getTransformedDataOpenweather(payload)
+    getOpenweatherDataFullfield(state, { payload }: PayloadAction<IWeatherStoreData>) {
       state.isLoading = false
+      state.openWeatherData = payload
       state.errorMsg = ''
     },
-    [fetchWeatherOpenweathermap.rejected.type]: (state, action: PayloadAction<string>) => {
+    getOpenweatherDataRejected(state, { payload }: PayloadAction<string>) {
       state.isLoading = false
-      state.errorMsg = action.payload
+      state.errorMsg = payload
     },
-    [fetchWeatherStormglass.pending.type]: (state) => {
+    getstormGlassDataPending(state) {
       state.isLoading = true
       state.errorMsg = ''
     },
-    [fetchWeatherStormglass.fulfilled.type]: (state, { payload }: PayloadAction<IStormglassResponse>) => {
-      if (state.openWeatherData) {
-        state.stormGlassData = addDataToStormglassData(sortStormglassData(payload), current(state.openWeatherData))
-      }
-      state.isLoading = false
+    getstormGlassDataFullfield(state, { payload }: PayloadAction<IWeatherStoreData>) {
+      state.isLoading = true
+      state.stormGlassData = payload
       state.errorMsg = ''
     },
-    [fetchWeatherStormglass.rejected.type]: (state, action: PayloadAction<string>) => {
+    getstormGlassDataRejected(state, { payload }: PayloadAction<string>) {
       state.isLoading = false
-      state.errorMsg = action.payload
+      state.errorMsg = payload
     },
   },
 })
 
 export const weatherReducer = weatherSlice.reducer
-
-// export const weatherReducer = weatherSlice.reducer
-// export const {} = weatherSlice.actions
+export const {
+  getOpenweatherDataPending,
+  getOpenweatherDataFullfield,
+  getOpenweatherDataRejected,
+  getstormGlassDataPending,
+  getstormGlassDataFullfield,
+  getstormGlassDataRejected,
+} = weatherSlice.actions

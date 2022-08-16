@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect, useState, KeyboardEvent } from 'react'
 import useOnclickOutside from 'react-cool-onclickoutside'
 
-import { fetchLocationByCityName } from '@store/actions/locationAction'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
+import { getLocationByCityNamePending } from '@store/reducers/locationReducer'
 
 import { City, Country, InputCity, Wrapper } from './styled'
 
@@ -18,7 +18,7 @@ export const LocationContainer = () => {
 
   useEffect(() => {
     if (cityName !== locationData?.city && !isEditCity) {
-      dispatch(fetchLocationByCityName(cityName))
+      dispatch(getLocationByCityNamePending())
     }
   }, [isEditCity])
 

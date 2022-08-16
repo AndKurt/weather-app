@@ -6,6 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { generalReducer } from './reducers/generalReducer'
 import { locationReducer } from './reducers/locationReducer'
 import { weatherReducer } from './reducers/weatherReducer'
+import rootSaga from './saga'
 
 const sagaMiddleware = createSagaMiddleware()
 const rootReducer = combineReducers({
@@ -31,6 +32,8 @@ export const setupStore = () =>
 
 export const store = setupStore()
 export const persistor = persistStore(store)
+
+sagaMiddleware.run(rootSaga)
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppStore = ReturnType<typeof setupStore>

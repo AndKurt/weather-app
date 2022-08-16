@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import baseBg from '@assets/img/baseBg.jpg'
@@ -5,16 +6,15 @@ import contenBg from '@assets/img/contenBg.jpg'
 import { apiOptions } from '@constants/api'
 import { IApiOptions } from '@interfaces/apiOptions'
 import { IBackgrounds, IUnsplashResponse } from '@interfaces/unsplash'
-import { fetchBackgrounds } from '@store/actions/generalAction'
 
-interface IInitialState {
+export interface IGeneralState {
   isLoading: boolean
   currentApi: IApiOptions
   currentBackground: IBackgrounds
   errorMsg: string
 }
 
-const initialState: IInitialState = {
+const initialState: IGeneralState = {
   isLoading: false,
   currentApi: apiOptions[0],
   currentBackground: {
@@ -28,16 +28,11 @@ const generalSlice = createSlice({
   name: 'general',
   initialState,
   reducers: {
-    setCurrentApi(state, { payload }: PayloadAction<IApiOptions>) {
-      state.currentApi = payload
-    },
-  },
-  extraReducers: {
-    [fetchBackgrounds.pending.type]: (state) => {
+    getBackgroundsPending(state) {
       state.isLoading = true
       state.errorMsg = ''
     },
-    [fetchBackgrounds.fulfilled.type]: (state, { payload }: PayloadAction<IUnsplashResponse>) => {
+    getBackgroundsFullfield(state, { payload }: PayloadAction<IUnsplashResponse>) {
       const bg1 = payload.results[0].urls.full
       const bg2 = payload.results[1].urls.full
       state.currentBackground = {
@@ -47,12 +42,16 @@ const generalSlice = createSlice({
       state.isLoading = false
       state.errorMsg = ''
     },
-    [fetchBackgrounds.rejected.type]: (state, action: PayloadAction<string>) => {
+    getBackgroundsRejected(state, action: PayloadAction<string>) {
       state.isLoading = false
       state.errorMsg = action.payload
+    },
+    setCurrentApi(state, { payload }: PayloadAction<IApiOptions>) {
+      state.currentApi = payload
     },
   },
 })
 
 export const generalReducer = generalSlice.reducer
-export const { setCurrentApi } = generalSlice.actions
+export const { getBackgroundsPending, getBackgroundsFullfield, getBackgroundsRejected, setCurrentApi } =
+  generalSlice.actions

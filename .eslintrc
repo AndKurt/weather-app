@@ -34,6 +34,7 @@
   },
   "rules": {
     "implicit-arrow-linebreak": ["off", "beside"],
+    "func-names": ["error", "always", { "generators": "as-needed" }],
     "import/no-cycle": [2, { "maxDepth": 1 }],
     "semi": ["error", "never"],
     "import/no-unresolved": "error",
@@ -146,6 +147,7 @@
       },
       "alias": {
         "map": [
+          ["@api", "./api"],
           ["@assets", "./assets"],
           ["@components", "./components"],
           ["@constants", "./constants"],
