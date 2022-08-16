@@ -1,67 +1,59 @@
-import axios, { AxiosResponse } from 'axios'
+/* eslint-disable object-curly-newline */
 import { call, put } from 'redux-saga/effects'
 
-import { fetchUnsplashApi } from '@assets/api'
-import { API_KEY, BASE_URL } from '@constants/api'
+import { fetchOpenweather, fetchStormglass } from '@assets/api'
 import { API_NAME } from '@constants/common'
 import { IOpenweatherResponse } from '@interfaces/openWeather'
-import { IUnsplashResponse } from '@interfaces/unsplash'
-import {
-  getBackgroundsFullfield,
-  getBackgroundsPending,
-  getBackgroundsRejected,
-  IGeneralState,
-} from '@store/reducers/generalReducer'
+import { IStormglassResponse } from '@interfaces/stormglass'
+import { IWeatherStoreData } from '@interfaces/weatherStore'
+import { IGeneralState } from '@store/reducers/generalReducer'
 import { ILocationState } from '@store/reducers/locationReducer'
 import {
   getOpenweatherDataFullfield,
   getOpenweatherDataPending,
   getOpenweatherDataRejected,
+  getstormGlassDataFullfield,
+  getstormGlassDataPending,
+  getstormGlassDataRejected,
   IWeatherState,
 } from '@store/reducers/weatherReducer'
 import { selectState } from '@utils/sagaHelpers'
-import { getTransformedDataOpenweather } from '@utils/weatherHelpers'
+import { addDataToStormglassData, getTransformedDataOpenweather, sortStormglassData } from '@utils/weatherHelpers'
 
-export const getBackgrounds = function* () {
-  const { openWeatherData, stormGlassData }: IWeatherState = yield selectState<IWeatherState>(
-    (state) => state.weatherReducer,
-  )
-  const { currentApi }: IGeneralState = yield selectState<IGeneralState>((state) => state.generalReducer)
-
-  const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
-  const photoName = isOpenweatherApi
-    ? openWeatherData?.current.weather.description
-    : stormGlassData?.current.weather.description
-
-  yield put(getBackgroundsPending())
-  const response: IUnsplashResponse | Error = yield call(fetchUnsplashApi, photoName as string)
-
-  if (response instanceof Error) {
-    yield put(getBackgroundsRejected(response.message))
-  } else {
-    yield put(getBackgroundsFullfield(response))
-  }
-}
+// eslint-disable-next-line import/no-cycle
+import { getBackgrounds } from './generalSaga'
 
 export const getCurrentWeather = function* () {
   const { locationData }: ILocationState = yield selectState<ILocationState>((state) => state.locationReducer)
-  const latitude = locationData?.lat
-  const lonngitude = locationData?.lon
+  const { openWeatherData }: IWeatherState = yield selectState<IWeatherState>((state) => state.weatherReducer)
+  const { currentApi }: IGeneralState = yield selectState<IGeneralState>((state) => state.generalReducer)
+  const latitude = locationData?.lat as string
+  const longitude = locationData?.lon as string
 
-  // const { currentApi }: IGeneralState = yield selectState<IGeneralState>((state) => state.generalReducer)
+  const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
 
-  // const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
+  yield put(getOpenweatherDataPending())
+  const responseOpenweather: IOpenweatherResponse | Error = yield call(fetchOpenweather, latitude, longitude)
 
-  try {
-    yield put(getOpenweatherDataPending())
-    const { data }: AxiosResponse<IOpenweatherResponse> = yield call(
-      axios.get,
-      `${BASE_URL.OPENWEATHERMAP}/data/2.5/onecall?lat=${latitude}&lon=${lonngitude}&exclude=minutely,hourly,alerts&appid=${API_KEY.OPENWEATHERMAP}&units=metric`,
-    )
-    const convertedData = getTransformedDataOpenweather(data)
+  if (responseOpenweather instanceof Error) {
+    yield put(getOpenweatherDataRejected(responseOpenweather.message))
+  } else {
+    const convertedData = getTransformedDataOpenweather(responseOpenweather)
     yield put(getOpenweatherDataFullfield(convertedData))
-    yield call(getBackgrounds)
-  } catch (error) {
-    yield put(getOpenweatherDataRejected('Ooops... Try to use another API service'))
   }
+
+  if (!isOpenweatherApi) {
+    const responseStormglass: IStormglassResponse | Error = yield call(fetchStormglass, latitude, longitude)
+    yield put(getstormGlassDataPending())
+
+    if (responseStormglass instanceof Error) {
+      yield put(getstormGlassDataRejected(responseStormglass.message))
+    } else {
+      const sortedStormglassData = sortStormglassData(responseStormglass)
+      const convertedData = addDataToStormglassData(sortedStormglassData, openWeatherData as IWeatherStoreData)
+      yield put(getstormGlassDataFullfield(convertedData))
+    }
+  }
+
+  yield call(getBackgrounds)
 }

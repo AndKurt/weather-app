@@ -7,9 +7,10 @@ import { getLocationByCityNamePending } from '@store/reducers/locationReducer'
 import { City, Country, InputCity, Wrapper } from './styled'
 
 export const LocationContainer = () => {
-  const [isEditCity, setIsEditCity] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const { locationData } = useAppSelector((state) => state.locationReducer)
+
+  const [isEditCity, setIsEditCity] = useState<boolean>(false)
   const [cityName, setCityName] = useState<string>(locationData?.city as string)
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export const LocationContainer = () => {
 
   useEffect(() => {
     if (cityName !== locationData?.city && !isEditCity) {
-      dispatch(getLocationByCityNamePending())
+      dispatch({ type: getLocationByCityNamePending.type, payload: cityName })
     }
   }, [isEditCity])
 

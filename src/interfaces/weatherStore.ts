@@ -20,4 +20,5 @@ export interface IDaily {
 export interface IWeatherStoreData {
   current: ICurrentKey
   daily: IDaily[]
+  errorMsg: string
 }

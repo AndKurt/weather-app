@@ -1,10 +1,9 @@
 /* eslint-disable object-curly-newline */
-import { PayloadAction } from '@reduxjs/toolkit'
-import axios, { AxiosResponse } from 'axios'
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 
-import { API_KEY, BASE_URL, GEO_BY_IP_URL } from '@constants/api'
+import { fetchLocationByCityName, fetchLocationByIP } from '@assets/api/locationAPI'
 import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/locationAPI'
+import { IActioWorker } from '@interfaces/saga'
 import {
   getLocationByIPPending,
   getLocationByIPRejected,
@@ -16,37 +15,35 @@ import {
 
 import { getCurrentWeather } from './weatherSaga'
 
-function* workGetCityByIP() {
-  try {
-    const { data }: AxiosResponse<ILocationIPResponce> = yield call(axios.get, GEO_BY_IP_URL)
-    yield put(getLocationByIPFullfield(data))
-
+const workGetCityByIP = function* () {
+  const response: ILocationIPResponce | Error = yield call(fetchLocationByIP)
+  if (response instanceof Error) {
+    yield put(getLocationByIPRejected(response.message))
+  } else {
+    yield put(getLocationByIPFullfield(response))
     yield call(getCurrentWeather)
-  } catch (error) {
-    yield put(getLocationByIPRejected('Nothing found'))
   }
 }
 
-function* watchGetCityByIPSaga() {
+const watchGetCityByIPSaga = function* () {
   yield takeEvery(getLocationByIPPending, workGetCityByIP)
 }
 
-function* workGetCityByCityName({ payload }: PayloadAction<string>) {
-  try {
-    const { data }: AxiosResponse<ILocationCityNameResponce> = yield call(
-      axios.get,
-      `${BASE_URL.POSITIONSTACK}/forward?access_key=${API_KEY.POSITIONSTACK}&query=${payload}`,
-    )
-    yield put(getLocationByCityNameFullfield(data))
-  } catch (error) {
-    yield put(getLocationByCityNameRejected('Nothing found'))
+const workGetCityByCityName = function* (action: IActioWorker) {
+  const response: ILocationCityNameResponce | Error = yield call(fetchLocationByCityName, action.payload)
+
+  if (response instanceof Error) {
+    yield put(getLocationByCityNameRejected(response.message))
+  } else {
+    yield put(getLocationByCityNameFullfield(response))
+    yield call(getCurrentWeather)
   }
 }
 
-function* watchGetCityByCityNameSaga() {
+const watchGetCityByCityNameSaga = function* () {
   yield takeEvery(getLocationByCityNamePending.type, workGetCityByCityName)
 }
 
-export default function* locationSaga() {
+export const locationSaga = function* () {
   yield all([watchGetCityByIPSaga(), watchGetCityByCityNameSaga()])
 }

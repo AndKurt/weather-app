@@ -1,1 +1,2 @@
-export * from './unsplashApi'
+export * from './backgroundAPI'
+export * from './weatherAPI'

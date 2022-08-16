@@ -25,6 +25,7 @@ export const getTransformedDataOpenweather = (data: IOpenweatherResponse) => {
         description: item.weather[0].description,
       },
     })),
+    errorMsg: '',
   }
 
   return transfromedData
@@ -34,13 +35,6 @@ export const sortStormglassData = (data: IStormglassResponse): IStormglassSorted
   const currentHour = new Date().getHours()
   const todayData = data.hours.find((item) => new Date(item.time).getHours() === currentHour)
   const noonArr = data.hours.slice(2).filter((item) => new Date(item?.time as string).getHours() === 12)
-
-  // const noonArr = data.hours
-  // .slice(2)
-  // .filter((item) => new Date(item?.time as string).getHours() === 12)
-  // .slice(0, DAYS_AMOUNT)
-
-  // console.log(data.hours.slice(1).filter((item) => new Date(item?.time as string).getHours() === 12))
 
   const sortedData: IStormglassSorted = {
     current: {
@@ -70,6 +64,7 @@ export const addDataToStormglassData = (
       ...item,
       weather: openweatherStoreData.daily[index].weather,
     })),
+    errorMsg: '',
   }
   return data
 }

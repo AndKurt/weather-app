@@ -4,14 +4,14 @@ import { IWeatherStoreData } from '@interfaces/weatherStore'
 
 export interface IWeatherState {
   isLoading: boolean
-  errorMsg: string
+  // errorMsg: string
   stormGlassData: IWeatherStoreData | null
   openWeatherData: IWeatherStoreData | null
 }
 
 const initialState: IWeatherState = {
   isLoading: false,
-  errorMsg: '',
+  // errorMsg: '',
   stormGlassData: null,
   openWeatherData: null,
 }
@@ -22,29 +22,40 @@ const weatherSlice = createSlice({
   reducers: {
     getOpenweatherDataPending(state) {
       state.isLoading = true
-      state.errorMsg = ''
+      if (state.openWeatherData) {
+        state.openWeatherData = { ...state.openWeatherData, errorMsg: '' }
+      }
     },
     getOpenweatherDataFullfield(state, { payload }: PayloadAction<IWeatherStoreData>) {
       state.isLoading = false
       state.openWeatherData = payload
-      state.errorMsg = ''
+      // state.errorMsg = ''
     },
     getOpenweatherDataRejected(state, { payload }: PayloadAction<string>) {
       state.isLoading = false
-      state.errorMsg = payload
+      if (state.openWeatherData) {
+        state.openWeatherData = { ...state.openWeatherData, errorMsg: payload }
+      }
+      // state.errorMsg = payload
     },
     getstormGlassDataPending(state) {
       state.isLoading = true
-      state.errorMsg = ''
+      if (state.stormGlassData) {
+        state.stormGlassData = { ...state.stormGlassData, errorMsg: '' }
+      }
+      // state.errorMsg = ''
     },
     getstormGlassDataFullfield(state, { payload }: PayloadAction<IWeatherStoreData>) {
-      state.isLoading = true
+      state.isLoading = false
       state.stormGlassData = payload
-      state.errorMsg = ''
+      // state.errorMsg = ''
     },
     getstormGlassDataRejected(state, { payload }: PayloadAction<string>) {
       state.isLoading = false
-      state.errorMsg = payload
+      if (state.stormGlassData) {
+        state.stormGlassData = { ...state.stormGlassData, errorMsg: payload }
+      }
+      // state.errorMsg = payload
     },
   },
 })
