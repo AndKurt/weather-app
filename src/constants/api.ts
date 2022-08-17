@@ -20,7 +20,8 @@ export const BASE_URL = {
   STORMGLASS: 'https://api.stormglass.io/v2/weather/point',
   POSITIONSTACK: 'http://api.positionstack.com/v1',
   UNSPLASH: 'https://api.unsplash.com/search',
-  GOOGLE_URL_SCOPE: 'https://www.googleapis.com/auth/calendar',
+  GOOGLE_URL_SCOPE: 'https://www.googleapis.com/auth/calendar.readonly',
+  GOOGlE_URL_CALENDAR: 'https://www.googleapis.com/calendar/v3/calendars/primary/events',
 }
 
 export const GEO_BY_IP_URL = 'http://ip-api.com/json/?fields=country,city,lat,lon'

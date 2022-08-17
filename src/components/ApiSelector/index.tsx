@@ -6,6 +6,8 @@ import { IApiOptions } from '@interfaces/apiOptions'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
 import { setCurrentApi } from '@store/reducers/generalReducer'
 
+import { Wrapper } from './styled'
+
 export const ApiSelector = () => {
   const { currentApi } = useAppSelector((state) => state.generalReducer)
   const dispatch = useAppDispatch()
@@ -17,8 +19,8 @@ export const ApiSelector = () => {
   }
 
   return (
-    <div style={{ width: '200px' }}>
+    <Wrapper>
       <Select options={apiOptions} defaultValue={currentApi} onChange={handleChange} />
-    </div>
+    </Wrapper>
   )
 }

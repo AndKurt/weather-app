@@ -8,6 +8,7 @@ import { IApiOptions } from '@interfaces/apiOptions'
 import { IBackgrounds, IUnsplashResponse } from '@interfaces/unsplash'
 
 export interface IGeneralState {
+  accessTokenGoogle: string
   isLoading: boolean
   currentApi: IApiOptions
   currentBackground: IBackgrounds
@@ -15,6 +16,7 @@ export interface IGeneralState {
 }
 
 const initialState: IGeneralState = {
+  accessTokenGoogle: '',
   isLoading: false,
   currentApi: apiOptions[0],
   currentBackground: {
@@ -49,9 +51,12 @@ const generalSlice = createSlice({
     setCurrentApi(state, { payload }: PayloadAction<IApiOptions>) {
       state.currentApi = payload
     },
+    setGoogleToken(state, { payload }: PayloadAction<string>) {
+      state.accessTokenGoogle = payload
+    },
   },
 })
 
 export const generalReducer = generalSlice.reducer
-export const { getBackgroundsPending, getBackgroundsFullfield, getBackgroundsRejected, setCurrentApi } =
+export const { getBackgroundsPending, getBackgroundsFullfield, getBackgroundsRejected, setCurrentApi, setGoogleToken } =
   generalSlice.actions

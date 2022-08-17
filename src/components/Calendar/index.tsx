@@ -1,70 +1,68 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { SyntheticEvent, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from 'react-google-login'
 
-import { apiCalendar } from '@api/calendarApi'
-import { IGoogleCalendarResponce } from '@interfaces/calendar'
+import { gapi } from 'gapi-script'
+
+import { fetchCalendar } from '@api/calendarApi'
+import { BASE_URL, GOOGLE_CLIENT_ID } from '@constants/api'
+import { ProfileObj } from '@interfaces/googleInit'
+import { getSortedCalendarData } from '@utils/calendar'
+// import { useAppDispatch } from '@store/hooks'
+// import { setGoogleToken } from '@store/reducers/generalReducer'
 
 export const Calendar = () => {
-  const [events, setEvents] = useState<IGoogleCalendarResponce[]>([])
-  const handleItemClick = (event: SyntheticEvent<any>, name: string): void => {
-    if (name === 'sign-in') {
-      apiCalendar.handleAuthClick()
-    } else if (name === 'sign-out') {
-      apiCalendar.handleSignoutClick()
+  const [profile, setProfile] = useState<ProfileObj | null>(null)
+  // const dispatch = useAppDispatch()
+
+  const onSuccess = async (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    setProfile((res as GoogleLoginResponse).profileObj)
+    const { accessToken } = res as GoogleLoginResponse
+    if (accessToken) {
+      // dispatch(setGoogleToken(accessToken))
+      const data = await fetchCalendar(accessToken)
+      if (data instanceof Error) {
+        console.log('error')
+      } else {
+        console.log(getSortedCalendarData(data))
+      }
     }
   }
 
+  const onFailure = (err: unknown) => {
+    console.log('failed', err)
+  }
+
+  const handlelogOut = () => {
+    setProfile(null)
+    // dispatch(setGoogleToken(''))
+  }
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.auth2.init({
+        client_id: GOOGLE_CLIENT_ID,
+        scope: BASE_URL.GOOGLE_URL_SCOPE,
+      })
+    }
+    gapi.load('client:auth2', initClient)
+  }, [])
+
   return (
     <div>
-      <div style={{ padding: '0.5em' }}>
-        <button type="button" onClick={(e) => handleItemClick(e, 'sign-in')}>
-          sign-in
-        </button>
-        <button type="button" onClick={(e) => handleItemClick(e, 'sign-out')}>
-          sign-out
-        </button>
-      </div>
-      <div style={{ padding: '0.5em' }}>
-        <button
-          type="button"
-          onClick={() => {
-            const eventFromNow: object = {
-              summary: 'Poc Dev From Now',
-              time: 480,
-            }
-
-            apiCalendar
-              .createEventFromNow(eventFromNow)
-              .then((result: object) => {
-                console.log(result)
-              })
-              .catch((error: any) => {
-                console.log(error)
-              })
-          }}
-        >
-          Create Event from now
-        </button>
-      </div>
-      <div style={{ padding: '0.5em' }}>
-        <button
-          type="button"
-          onClick={() => {
-            apiCalendar.listUpcomingEvents(10).then(({ result }: any) => {
-              setEvents(result.items)
-            })
-          }}
-        >
-          List upcoming events
-        </button>
-        <div>
-          <h4>Events</h4>
-          {events.length === 0 && <p>No events to show</p>}
-          {events.map((event) => (
-            <p key={event.id}>{JSON.stringify(event)}</p>
-          ))}
-        </div>
-      </div>
+      {profile ? (
+        <GoogleLogout clientId={GOOGLE_CLIENT_ID} buttonText="Log out" onLogoutSuccess={handlelogOut} />
+      ) : (
+        <GoogleLogin
+          clientId={GOOGLE_CLIENT_ID}
+          buttonText="Sign to Google Calendar"
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          cookiePolicy="single_host_origin"
+          isSignedIn
+          responseType="sdf"
+        />
+      )}
     </div>
   )
 }

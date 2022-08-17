@@ -41,6 +41,12 @@ export const Content = styled.div<IProps>`
 `
 
 export const CentralContainer = styled.div`
+  display: flex;
   height: auto;
+  justify-content: space-between;
   width: 100%;
+
+  @media ${({ theme }) => theme.DEVICE.tablet} {
+    flex-direction: column;
+  }
 `

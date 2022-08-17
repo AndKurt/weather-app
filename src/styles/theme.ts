@@ -55,6 +55,7 @@ const WIDTH = {
   MIN: '300px',
   DATE_MAX: '32%',
   LOCATION_MAX: '30%',
+  SELECTOR: '170px',
 }
 
 // Height

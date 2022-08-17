@@ -3,6 +3,7 @@ import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from 'redux-persist/lib/storage'
 import createSagaMiddleware from 'redux-saga'
 
+import { calendarReducer } from './reducers/calendarReducer'
 import { generalReducer } from './reducers/generalReducer'
 import { locationReducer } from './reducers/locationReducer'
 import { weatherReducer } from './reducers/weatherReducer'
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   generalReducer,
   locationReducer,
   weatherReducer,
+  calendarReducer,
 })
 
 const persistConfig = {

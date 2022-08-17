@@ -1,28 +1,40 @@
-export interface Creator {
+import { IFormatedDate } from '@utils/timeDate'
+
+interface IDate {
+  dateTime: string | Date
+  timeZone: string
+}
+
+interface Item {
+  summary: string
+  start: IFormatedDate
+  end: IFormatedDate
+}
+
+// -----------Google Calendar API Responce---------
+interface DefaultReminder {
+  method: string
+  minutes: number
+}
+
+interface Creator {
   email: string
   self: boolean
 }
 
-export interface Organizer {
+interface Organizer {
   email: string
   self: boolean
 }
 
-export interface Start {
-  dateTime: Date
-  timeZone: string
-}
-
-export interface End {
-  dateTime: Date
-  timeZone: string
-}
-
-export interface Reminders {
+interface Reminders {
   useDefault: boolean
 }
 
-export interface IGoogleCalendarResponce {
+interface ItemResponce {
+  summary: string
+  start: IDate
+  end: IDate
   kind: string
   etag: string
   id: string
@@ -30,13 +42,28 @@ export interface IGoogleCalendarResponce {
   htmlLink: string
   created: Date
   updated: Date
-  summary: string
   creator: Creator
   organizer: Organizer
-  start: Start
-  end: End
   iCalUID: string
   sequence: number
   reminders: Reminders
   eventType: string
+  description: string
+}
+
+export interface IGoogleCalendarResponce {
+  kind: string
+  etag: string
+  summary: string
+  updated: Date
+  timeZone: string
+  accessRole: string
+  defaultReminders: DefaultReminder[]
+  nextSyncToken: string
+  items: ItemResponce[]
+}
+
+// -----------Google Calendar  sorted data---------
+export interface IGoogleCalendarSorted {
+  items: Item[]
 }

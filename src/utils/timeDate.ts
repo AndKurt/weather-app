@@ -57,3 +57,14 @@ export const getWeekDay = (timestamp: number): string => {
   const instance = new Date(timestamp * 1000)
   return days[instance.getDay()]
 }
+
+export const getFormatedToISODate = (startDate = new Date(), nextDays = 0): string => {
+  const date = new Date()
+  date.setDate(startDate.getDate() + nextDays)
+  date.setHours(0, 0, 0, 0)
+  const isoDate = date.toISOString()
+  return isoDate
+}
+
+export const convertTimeZone = (date: string | Date, tzString: string) =>
+  new Date((typeof date === 'string' ? new Date(date) : date).toLocaleString('en-US', { timeZone: tzString }))
