@@ -1,5 +1,5 @@
 // Color palette
-const COLOR = {
+export const COLOR = {
   WHITE: '#fff',
   BLACK: '#000',
   LIGHT_BLUE: 'rgba(55.0, 55.0, 189.0, 1.0)',
@@ -60,31 +60,27 @@ const WIDTH = {
 // Height
 const HEIGHT = {}
 
-// export interface ITheme {
-//  COLOR: {
-//    WHITE: string
-//    BLACK: string
-//    DARK_BLUE: string
-//  }
-//  SPACES: {
-//    none: number
-//    '5': number
-//    '15': number
-//    '30': number
-//  }
-//  FONT_SIZE: {
-//    S: string
-//    M: string
-//    L: string
-//    XL: string
-//  }
-//  LINE_HEIGHT: {
-//    S: string
-//    M: string
-//    L: string
-//    XL: string
-//  }
-// }
+// Media queries
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  tablet: '768px',
+  laptop: '1024px',
+  laptopL: '1440px',
+  desktop: '2560px',
+}
+
+const DEVICE = {
+  mobileS: `(max-width: ${size.mobileS})`,
+  mobileM: `(max-width: ${size.mobileM})`,
+  mobileL: `(max-width: ${size.mobileL})`,
+  tablet: `(max-width: ${size.tablet})`,
+  laptop: `(max-width: ${size.laptop})`,
+  laptopL: `(max-width: ${size.laptopL})`,
+  desktop: `(max-width: ${size.desktop})`,
+  desktopL: `(max-width: ${size.desktop})`,
+}
 
 export const theme = {
   COLOR,
@@ -95,4 +91,5 @@ export const theme = {
   WIDTH,
   HEIGHT,
   SPINNER_COLORS,
+  DEVICE,
 }

@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 
-import { fetchLocationByCityName, fetchLocationByIP } from '@assets/api/locationAPI'
+import { fetchLocationByCityName, fetchLocationByIP } from '@api/locationAPI'
 import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/locationAPI'
 import { IActioWorker } from '@interfaces/saga'
 import {

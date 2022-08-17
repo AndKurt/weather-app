@@ -12,11 +12,19 @@ export const City = styled.h2`
   font-size: ${({ theme }) => theme.FONT_SIZE.L};
   margin-bottom: ${({ theme }) => theme.SPACES[15]}px;
   text-align: right;
+
+  @media ${({ theme }) => theme.DEVICE.tablet} {
+    font-size: ${({ theme }) => theme.FONT_SIZE.M};
+  }
 `
 export const Country = styled.h3`
   font-size: ${({ theme }) => theme.FONT_SIZE.M};
   text-align: right;
   user-select: none;
+
+  @media ${({ theme }) => theme.DEVICE.tablet} {
+    font-size: ${({ theme }) => theme.FONT_SIZE.S};
+  }
 `
 
 interface IInputCity {
@@ -34,4 +42,9 @@ export const InputCity = styled.input.attrs<IInputCity>({
   font-weight: ${({ theme }) => theme.FONT_WEIGHT[700]};
   font-size: ${({ theme }) => theme.FONT_SIZE.L};
   margin-bottom: ${({ theme }) => theme.SPACES[15]}px;
+
+  @media ${({ theme }) => theme.DEVICE.tablet} {
+    font-size: ${({ theme }) => theme.FONT_SIZE.M};
+    height: ${({ theme }) => theme.LINE_HEIGHT.M};
+  }
 `

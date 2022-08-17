@@ -9,7 +9,10 @@ export const API_KEY = {
   // STORMGLASS: '9a21acfa-18d6-11ed-93b0-0242ac130002-9a21adae-18d6-11ed-93b0-0242ac130002',
   POSITIONSTACK: '6c25aead701f2d40ce6d9c02f41aadae',
   UNSPLASH: 'iWpE0mNximbdS5XN_rXOCD2gA8yDL0g1cWnaHxXg8Ck',
+  GOOGLE: 'AIzaSyC41VxJYQX433mCa4eqeUuvsinE63L7reI',
 }
+
+export const GOOGLE_CLIENT_ID = '548999297062-97nrp3qn9tcehkprlpfkq6oedcclappa.apps.googleusercontent.com'
 
 export const BASE_URL = {
   OPENWEATHERMAP: 'https://api.openweathermap.org',
@@ -17,6 +20,7 @@ export const BASE_URL = {
   STORMGLASS: 'https://api.stormglass.io/v2/weather/point',
   POSITIONSTACK: 'http://api.positionstack.com/v1',
   UNSPLASH: 'https://api.unsplash.com/search',
+  GOOGLE_URL_SCOPE: 'https://www.googleapis.com/auth/calendar',
 }
 
 export const GEO_BY_IP_URL = 'http://ip-api.com/json/?fields=country,city,lat,lon'

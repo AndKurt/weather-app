@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { ApiSelector } from '@components/ApiSelector'
+import { Calendar } from '@components/Calendar'
 import { Header } from '@components/Header'
 import { Loader } from '@components/Loader'
 import { WeatherContainer } from '@components/WeatherContainer'
@@ -26,6 +27,7 @@ export const HomePage = () => {
       <Content currentBackground={currentBackground}>
         <Header />
         <CentralContainer>
+          <Calendar />
           <ApiSelector />
         </CentralContainer>
         <WeatherContainer />

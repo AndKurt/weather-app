@@ -1,8 +1,9 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable import/no-cycle */
 /* eslint-disable object-curly-newline */
 import { call, put } from 'redux-saga/effects'
 
-import { fetchOpenweather, fetchStormglass } from '@assets/api'
+import { fetchOpenweather, fetchStormglass } from '@api/weatherAPI'
 import { API_NAME } from '@constants/common'
 import { IOpenweatherResponse } from '@interfaces/openWeather'
 import { IStormglassResponse } from '@interfaces/stormglass'

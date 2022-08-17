@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 
-import { fetchUnsplashApi } from '@assets/api'
+import { fetchUnsplashApi } from '@api/backgroundAPI'
 import { API_NAME } from '@constants/common'
 import { IUnsplashResponse } from '@interfaces/unsplash'
 import {

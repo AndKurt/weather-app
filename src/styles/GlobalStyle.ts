@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
+import { COLOR } from './theme'
+
 export const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
@@ -25,4 +27,20 @@ a {
 #root {
   height: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px grey;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: ${COLOR.LIGHT_GREY};
+  border: 1px solid ${COLOR.LIGHT_GREY};
+  border-radius: 5px;
+}
+
 `

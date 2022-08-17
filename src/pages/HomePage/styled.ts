@@ -31,6 +31,13 @@ export const Content = styled.div<IProps>`
   position: relative;
   width: 100%;
   z-index: 10;
+
+  @media ${({ theme }) => theme.DEVICE.tablet} {
+    padding: ${({ theme }) => theme.SPACES[30]}px;
+  }
+  @media ${({ theme }) => theme.DEVICE.mobileL} {
+    padding: ${({ theme }) => theme.SPACES[15]}px;
+  }
 `
 
 export const CentralContainer = styled.div`

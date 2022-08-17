@@ -11,4 +11,9 @@ export const Content = styled.p`
   padding: ${({ theme }) => theme.SPACES[5]}px ${({ theme }) => theme.SPACES[10]}px;
   text-transform: uppercase;
   user-select: none;
+
+  @media ${({ theme }) => theme.DEVICE.mobileL} {
+    font-size: ${({ theme }) => theme.FONT_SIZE.S};
+    height: 25px;
+  }
 `
