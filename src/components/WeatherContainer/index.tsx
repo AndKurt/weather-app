@@ -3,13 +3,17 @@ import React from 'react'
 import { Loader } from '@components/Loader'
 import { NextWeatherCard } from '@components/NextWeatherCard'
 import { TodayWeatherCard } from '@components/TodayWeatherCard'
+import { API_NAME } from '@constants/common'
 import { useAppSelector } from '@store/hooks'
 
 import { WeekDaysContainer, Wrapper } from './styled'
 
 export const WeatherContainer = () => {
-  const { isLoading, openWeatherData } = useAppSelector((state) => state.weatherReducer)
-  const weekDays = openWeatherData?.daily
+  const { isLoading, openWeatherData, stormglassData } = useAppSelector((state) => state.weatherReducer)
+  const { currentApi } = useAppSelector((state) => state.generalReducer)
+
+  const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
+  const weekDays = isOpenweatherApi ? openWeatherData?.daily : stormglassData?.daily
 
   return (
     <Wrapper>

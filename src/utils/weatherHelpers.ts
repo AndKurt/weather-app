@@ -1,7 +1,7 @@
 import { DAYS_AMOUNT } from '@constants/common'
 import { IOpenweatherResponse } from '@interfaces/index'
 import { IStormglassResponse, IStormglassSorted } from '@interfaces/stormglass'
-import { IWeatherStoreData } from '@interfaces/weatherStore'
+import { IWeatherLastUpdate, IWeatherStoreData } from '@interfaces/weatherStore'
 
 import { getWeekDay } from './timeDate'
 
@@ -25,9 +25,7 @@ export const getTransformedDataOpenweather = (data: IOpenweatherResponse) => {
         description: item.weather[0].description,
       },
     })),
-    errorMsg: '',
   }
-
   return transfromedData
 }
 
@@ -64,7 +62,15 @@ export const addDataToStormglassData = (
       ...item,
       weather: openweatherStoreData.daily[index].weather,
     })),
-    errorMsg: '',
   }
   return data
+}
+
+export const getUpdatedTime = (): IWeatherLastUpdate => {
+  const currentDate = new Date()
+  const lastUpdate: IWeatherLastUpdate = {
+    day: currentDate.getDate(),
+    hour: currentDate.getHours(),
+  }
+  return lastUpdate
 }

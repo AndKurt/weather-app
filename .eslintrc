@@ -33,6 +33,7 @@
     "jest": true
   },
   "rules": {
+    "operator-linebreak": ["error", "after"],
     "implicit-arrow-linebreak": ["off", "beside"],
     "func-names": ["error", "always", { "generators": "as-needed" }],
     "import/no-cycle": [2, { "maxDepth": 1 }],

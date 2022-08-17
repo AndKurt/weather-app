@@ -20,5 +20,9 @@ export interface IDaily {
 export interface IWeatherStoreData {
   current: ICurrentKey
   daily: IDaily[]
-  errorMsg: string
+}
+
+export interface IWeatherLastUpdate {
+  day: number
+  hour: number
 }

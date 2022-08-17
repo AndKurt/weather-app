@@ -53,7 +53,7 @@ const SPACES = {
 const WIDTH = {
   MAX: '1200px',
   MIN: '300px',
-  DATE_MAX: '30%',
+  DATE_MAX: '32%',
   LOCATION_MAX: '30%',
 }
 

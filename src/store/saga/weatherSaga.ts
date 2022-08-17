@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable object-curly-newline */
 import { call, put } from 'redux-saga/effects'
 
@@ -18,42 +19,53 @@ import {
   IWeatherState,
 } from '@store/reducers/weatherReducer'
 import { selectState } from '@utils/sagaHelpers'
-import { addDataToStormglassData, getTransformedDataOpenweather, sortStormglassData } from '@utils/weatherHelpers'
+import {
+  addDataToStormglassData,
+  getTransformedDataOpenweather,
+  getUpdatedTime,
+  sortStormglassData,
+} from '@utils/weatherHelpers'
 
-// eslint-disable-next-line import/no-cycle
 import { getBackgrounds } from './generalSaga'
 
 export const getCurrentWeather = function* () {
   const { locationData }: ILocationState = yield selectState<ILocationState>((state) => state.locationReducer)
-  const { openWeatherData }: IWeatherState = yield selectState<IWeatherState>((state) => state.weatherReducer)
+  const { openWeatherData, openweatherLastUpdate, stormglassLastUpdate }: IWeatherState =
+    yield selectState<IWeatherState>((state) => state.weatherReducer)
+  const currentDate = getUpdatedTime()
+
   const { currentApi }: IGeneralState = yield selectState<IGeneralState>((state) => state.generalReducer)
   const latitude = locationData?.lat as string
   const longitude = locationData?.lon as string
 
   const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
 
-  yield put(getOpenweatherDataPending())
-  const responseOpenweather: IOpenweatherResponse | Error = yield call(fetchOpenweather, latitude, longitude)
+  if (openweatherLastUpdate?.day !== currentDate.day || openweatherLastUpdate.hour + 1 < currentDate.hour) {
+    yield put(getOpenweatherDataPending())
+    const responseOpenweather: IOpenweatherResponse | Error = yield call(fetchOpenweather, latitude, longitude)
 
-  if (responseOpenweather instanceof Error) {
-    yield put(getOpenweatherDataRejected(responseOpenweather.message))
-  } else {
-    const convertedData = getTransformedDataOpenweather(responseOpenweather)
-    yield put(getOpenweatherDataFullfield(convertedData))
-  }
-
-  if (!isOpenweatherApi) {
-    const responseStormglass: IStormglassResponse | Error = yield call(fetchStormglass, latitude, longitude)
-    yield put(getstormGlassDataPending())
-
-    if (responseStormglass instanceof Error) {
-      yield put(getstormGlassDataRejected(responseStormglass.message))
+    if (responseOpenweather instanceof Error) {
+      yield put(getOpenweatherDataRejected(responseOpenweather.message))
     } else {
-      const sortedStormglassData = sortStormglassData(responseStormglass)
-      const convertedData = addDataToStormglassData(sortedStormglassData, openWeatherData as IWeatherStoreData)
-      yield put(getstormGlassDataFullfield(convertedData))
+      const convertedData = getTransformedDataOpenweather(responseOpenweather)
+      yield put(getOpenweatherDataFullfield(convertedData))
+      yield call(getBackgrounds)
     }
   }
 
-  yield call(getBackgrounds)
+  if (!isOpenweatherApi) {
+    if (stormglassLastUpdate?.day !== currentDate.day || stormglassLastUpdate.hour + 1 < currentDate.hour) {
+      const responseStormglass: IStormglassResponse | Error = yield call(fetchStormglass, latitude, longitude)
+      yield put(getstormGlassDataPending())
+
+      if (responseStormglass instanceof Error) {
+        yield put(getstormGlassDataRejected(responseStormglass.message))
+      } else {
+        const sortedStormglassData = sortStormglassData(responseStormglass)
+        const convertedData = addDataToStormglassData(sortedStormglassData, openWeatherData as IWeatherStoreData)
+        yield put(getstormGlassDataFullfield(convertedData))
+      }
+      yield call(getBackgrounds)
+    }
+  }
 }

@@ -18,7 +18,7 @@ import { selectState } from '@utils/sagaHelpers'
 import { getCurrentWeather } from './weatherSaga'
 
 export const getBackgrounds = function* () {
-  const { openWeatherData, stormGlassData }: IWeatherState = yield selectState<IWeatherState>(
+  const { openWeatherData, stormglassData: stormGlassData }: IWeatherState = yield selectState<IWeatherState>(
     (state) => state.weatherReducer,
   )
   const { currentApi }: IGeneralState = yield selectState<IGeneralState>((state) => state.generalReducer)

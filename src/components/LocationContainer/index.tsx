@@ -3,6 +3,7 @@ import useOnclickOutside from 'react-cool-onclickoutside'
 
 import { useAppDispatch, useAppSelector } from '@store/hooks'
 import { getLocationByCityNamePending } from '@store/reducers/locationReducer'
+import { resetWeaterStoreForUpdate } from '@store/reducers/weatherReducer'
 
 import { City, Country, InputCity, Wrapper } from './styled'
 
@@ -19,6 +20,7 @@ export const LocationContainer = () => {
 
   useEffect(() => {
     if (cityName !== locationData?.city && !isEditCity) {
+      dispatch(resetWeaterStoreForUpdate())
       dispatch({ type: getLocationByCityNamePending.type, payload: cityName })
     }
   }, [isEditCity])
