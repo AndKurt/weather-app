@@ -35,8 +35,8 @@ const generalSlice = createSlice({
       state.errorMsg = ''
     },
     getBackgroundsFullfield(state, { payload }: PayloadAction<IUnsplashResponse>) {
-      const bg1 = payload.results[0].urls.full
-      const bg2 = payload.results[1].urls.full
+      const bg1 = payload.results[0].urls.regular
+      const bg2 = payload.results[1].urls.regular
       state.currentBackground = {
         bg1,
         bg2,

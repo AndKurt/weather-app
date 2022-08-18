@@ -1,20 +1,24 @@
 import ApiCalendar from 'react-google-calendar-api'
 
 import axios from 'axios'
+import { gapi } from 'gapi-script'
 
-import { API_KEY, BASE_URL, GOOGLE_CLIENT_ID } from '@constants/api'
+import { BASE_URL, GOOGLE_CLIENT_ID } from '@constants/api'
 import { IGoogleCalendarResponce } from '@interfaces/calendar'
 import { getFormatedToISODate } from '@utils/timeDate'
 
-export const config = {
-  clientId: GOOGLE_CLIENT_ID,
-  apiKey: API_KEY.GOOGLE,
-  scope: BASE_URL.GOOGLE_URL_SCOPE,
-  discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+// ----- Google init --------
+export const googleInit = () => {
+  const initClient = () => {
+    gapi.auth2.init({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: BASE_URL.GOOGLE_URL_SCOPE,
+    })
+  }
+  gapi.load('client:auth2', initClient)
 }
 
-export const apiCalendar = new ApiCalendar(config)
-
+// ----- Google Calendar -------
 export const fetchCalendar = async (accessToken: string): Promise<IGoogleCalendarResponce | Error> => {
   try {
     const today = getFormatedToISODate()

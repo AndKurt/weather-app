@@ -2,8 +2,7 @@
 import React, { useEffect } from 'react'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from 'react-google-login'
 
-import { gapi } from 'gapi-script'
-
+import { googleInit } from '@api/calendarApi'
 import { BASE_URL, GOOGLE_CLIENT_ID } from '@constants/api'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
 import {
@@ -35,13 +34,7 @@ export const GoogleControls = () => {
   }
 
   useEffect(() => {
-    const initClient = () => {
-      gapi.auth2.init({
-        client_id: GOOGLE_CLIENT_ID,
-        scope: BASE_URL.GOOGLE_URL_SCOPE,
-      })
-    }
-    gapi.load('client:auth2', initClient)
+    googleInit()
   }, [])
 
   return (

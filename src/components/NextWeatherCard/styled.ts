@@ -22,17 +22,14 @@ export const Wrapper = styled.div`
 `
 
 export const WeatherImg = styled.img`
-  height: 100px;
-  width: 100px;
+  ${({ theme }) => theme.IMG_SIZE.NEXT_DAY.L};
 
   @media ${({ theme }) => theme.DEVICE.laptop} {
-    height: 70px;
-    width: 70px;
+    ${({ theme }) => theme.IMG_SIZE.NEXT_DAY.M};
   }
 
   @media ${({ theme }) => theme.DEVICE.mobileL} {
-    height: 55px;
-    width: 55px;
+    ${({ theme }) => theme.IMG_SIZE.NEXT_DAY.S};
   }
 `
 

@@ -20,22 +20,18 @@ export const TextContainer = styled.div`
 `
 
 export const WeatherImg = styled.img`
-  height: 200px;
-  width: 200px;
+  ${({ theme }) => theme.IMG_SIZE.CURRENT_DAY.L}
 
   @media ${({ theme }) => theme.DEVICE.laptop} {
-    height: 120px;
-    width: 120px;
+    ${({ theme }) => theme.IMG_SIZE.CURRENT_DAY.M}
   }
 
   @media ${({ theme }) => theme.DEVICE.tablet} {
-    height: 95px;
-    width: 95px;
+    ${({ theme }) => theme.IMG_SIZE.CURRENT_DAY.S}
   }
 
   @media ${({ theme }) => theme.DEVICE.mobileL} {
-    height: 70px;
-    width: 70px;
+    ${({ theme }) => theme.IMG_SIZE.CURRENT_DAY.XS}
   }
 `
 

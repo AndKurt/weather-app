@@ -12,22 +12,17 @@ export const EventsContainer = () => {
 
   if (!isAuth) return null
 
-  return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <GreetText>Welcome {userData?.givenName}</GreetText>
-          <Wrapper>
-            {calendarData &&
-              calendarData.items.map(({ end, start, summary }: ICalendarItem) => (
-                <EventItem key={summary} end={end} start={start} summary={summary} />
-              ))}
-          </Wrapper>
-        </>
-      )}
+      <GreetText>Welcome {userData?.givenName}</GreetText>
+      <Wrapper>
+        {calendarData &&
+          calendarData.items.map(({ end, start, summary }: ICalendarItem) => (
+            <EventItem key={summary} end={end} start={start} summary={summary} />
+          ))}
+      </Wrapper>
     </>
   )
 }

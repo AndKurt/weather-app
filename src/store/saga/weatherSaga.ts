@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 /* eslint-disable import/no-cycle */
 /* eslint-disable object-curly-newline */
 import { call, put } from 'redux-saga/effects'

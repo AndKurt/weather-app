@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { ApiSelector } from '@components/ApiSelector'
+import { ErrorBoundary } from '@components/ErrorBoundary'
 import { EventsContainer } from '@components/EventsContainer'
 import { GoogleControls } from '@components/GoogleControls'
 import { Header } from '@components/Header'
@@ -26,13 +27,19 @@ export const HomePage = () => {
     <Wrapper currentBackground={currentBackground}>
       {isLoading && <Loader />}
       <Content currentBackground={currentBackground}>
-        <Header />
+        <ErrorBoundary>
+          <Header />
+        </ErrorBoundary>
         <CentralContainer>
-          <CentralHelper>
-            <GoogleControls />
-            <ApiSelector />
-          </CentralHelper>
-          <EventsContainer />
+          <ErrorBoundary>
+            <CentralHelper>
+              <GoogleControls />
+              <ApiSelector />
+            </CentralHelper>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <EventsContainer />
+          </ErrorBoundary>
         </CentralContainer>
         <WeatherContainer />
       </Content>

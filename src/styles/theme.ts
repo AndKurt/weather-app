@@ -1,3 +1,5 @@
+import { css } from 'styled-components'
+
 // Color palette
 export const COLOR = {
   WHITE: '#fff',
@@ -61,6 +63,43 @@ const WIDTH = {
 // Height
 const HEIGHT = {}
 
+// Weather imgs size
+const IMG_SIZE = {
+  CURRENT_DAY: {
+    L: css`
+      height: 200px;
+      width: 200px;
+    `,
+    M: css`
+      height: 120px;
+      width: 120px;
+    `,
+    S: css`
+      height: 95px;
+      width: 95px;
+    `,
+    XS: css`
+      height: 70px;
+      width: 70px;
+    `,
+  },
+
+  NEXT_DAY: {
+    L: css`
+      height: 100px;
+      width: 100px;
+    `,
+    M: css`
+      height: 70px;
+      width: 70px;
+    `,
+    S: css`
+      height: 55px;
+      width: 55px;
+    `,
+  },
+}
+
 // Media queries
 const size = {
   mobileS: '320px',
@@ -93,4 +132,5 @@ export const theme = {
   HEIGHT,
   SPINNER_COLORS,
   DEVICE,
+  IMG_SIZE,
 }

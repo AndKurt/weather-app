@@ -9,11 +9,13 @@ import { useAppSelector } from '@store/hooks'
 import { WeekDaysContainer, Wrapper } from './styled'
 
 export const WeatherContainer = () => {
-  const { isLoading, openWeatherData, stormglassData } = useAppSelector((state) => state.weatherReducer)
+  const { isLoading, openWeatherData, stormglassData, stormglassError } = useAppSelector(
+    (state) => state.weatherReducer,
+  )
   const { currentApi } = useAppSelector((state) => state.generalReducer)
 
   const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
-  const weekDays = isOpenweatherApi ? openWeatherData?.daily : stormglassData?.daily
+  const weekDays = isOpenweatherApi || stormglassError ? openWeatherData?.daily : stormglassData?.daily
 
   return (
     <Wrapper>

@@ -8,26 +8,33 @@ import { useAppSelector } from '@store/hooks'
 import { Temperature, TextContainer, WeatherImg, Wrapper } from './styled'
 
 export const TodayWeatherCard = () => {
-  const { openWeatherData, stormglassData } = useAppSelector((state) => state.weatherReducer)
+  const { openWeatherData, stormglassData, stormglassError } = useAppSelector((state) => state.weatherReducer)
   const { currentApi } = useAppSelector((state) => state.generalReducer)
 
   const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
   const temperature = Math.round(
-    isOpenweatherApi ? (openWeatherData?.current.temp as number) : (stormglassData?.current.temp as number),
+    isOpenweatherApi || stormglassError
+      ? (openWeatherData?.current.temp as number)
+      : (stormglassData?.current.temp as number),
   )
 
-  const iconName = isOpenweatherApi ? openWeatherData?.current.weather.icon : stormglassData?.current.weather.icon
+  const iconName =
+    isOpenweatherApi || stormglassError ? openWeatherData?.current.weather.icon : stormglassData?.current.weather.icon
+
+  console.log(temperature)
 
   return (
     <Wrapper>
-      <WeatherImg src={`${BASE_URL.OPENWEATHERMAP_IMG}/${iconName}@2x.png`} alt="weater-icon" />
-      <TextContainer>
-        <Label text="Today" />
-        <Temperature>
-          {temperature}
-          &deg;
-        </Temperature>
-      </TextContainer>
+      {iconName && <WeatherImg src={`${BASE_URL.OPENWEATHERMAP_IMG}/${iconName}@2x.png`} alt="weater-icon" />}
+      {temperature && (
+        <TextContainer>
+          <Label text="Today" />
+          <Temperature>
+            {temperature}
+            &deg;
+          </Temperature>
+        </TextContainer>
+      )}
     </Wrapper>
   )
 }
