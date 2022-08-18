@@ -21,20 +21,18 @@ export const TodayWeatherCard = () => {
   const iconName =
     isOpenweatherApi || stormglassError ? openWeatherData?.current.weather.icon : stormglassData?.current.weather.icon
 
-  console.log(temperature)
+  if (temperature && iconName) return null
 
   return (
     <Wrapper>
-      {iconName && <WeatherImg src={`${BASE_URL.OPENWEATHERMAP_IMG}/${iconName}@2x.png`} alt="weater-icon" />}
-      {temperature && (
-        <TextContainer>
-          <Label text="Today" />
-          <Temperature>
-            {temperature}
-            &deg;
-          </Temperature>
-        </TextContainer>
-      )}
+      <WeatherImg src={`${BASE_URL.OPENWEATHERMAP_IMG}/${iconName}@2x.png`} alt="weater-icon" />
+      <TextContainer>
+        <Label text="Today" />
+        <Temperature>
+          {temperature}
+          &deg;
+        </Temperature>
+      </TextContainer>
     </Wrapper>
   )
 }
