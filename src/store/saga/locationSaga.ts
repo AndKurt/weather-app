@@ -3,7 +3,7 @@ import { all, call, put, takeEvery } from 'redux-saga/effects'
 
 import { fetchLocationByCityName, fetchLocationByIP } from '@api/locationAPI'
 import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/locationAPI'
-import { IActioWorker } from '@interfaces/saga'
+import { IActionWorker } from '@interfaces/saga'
 import {
   getLocationByIPPending,
   getLocationByIPRejected,
@@ -29,7 +29,7 @@ const watchGetCityByIPSaga = function* () {
   yield takeEvery(getLocationByIPPending, workGetCityByIP)
 }
 
-const workGetCityByCityName = function* (action: IActioWorker) {
+const workGetCityByCityName = function* (action: IActionWorker) {
   const response: ILocationCityNameResponce | Error = yield call(fetchLocationByCityName, action.payload)
 
   if (response instanceof Error) {

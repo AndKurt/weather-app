@@ -1,4 +1,4 @@
-export interface ProfileObj {
+export interface IProfileObj {
   googleId: string
   imageUrl: string
   email: string
@@ -8,5 +8,5 @@ export interface ProfileObj {
 
 export interface IGoogleInit {
   accessToken: string
-  profileObj: ProfileObj
+  profileObj: IProfileObj
 }

@@ -42,11 +42,22 @@ export const Content = styled.div<IProps>`
 
 export const CentralContainer = styled.div`
   display: flex;
-  height: auto;
+  flex-direction: column;
+  height: 50%;
+  width: 100%;
+
+  @media ${({ theme }) => theme.DEVICE.tablet} {
+    height: 60%;
+  }
+`
+
+export const CentralHelper = styled.div`
+  display: flex;
   justify-content: space-between;
   width: 100%;
 
   @media ${({ theme }) => theme.DEVICE.tablet} {
+    align-items: center;
     flex-direction: column;
   }
 `

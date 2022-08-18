@@ -34,6 +34,8 @@
   },
   "rules": {
     "implicit-arrow-linebreak": ["off", "beside"],
+    "react/jsx-one-expression-per-line": "off",
+    "operator-linebreak": ["error", "after", { "overrides": { "+=": "before" } }],
     "func-names": ["error", "always", { "generators": "as-needed" }],
     "import/no-cycle": [2, { "maxDepth": 1 }],
     "semi": ["error", "never"],

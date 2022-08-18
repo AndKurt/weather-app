@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 
 import { ApiSelector } from '@components/ApiSelector'
-import { Calendar } from '@components/Calendar'
+import { EventsContainer } from '@components/EventsContainer'
+import { GoogleControls } from '@components/GoogleControls'
 import { Header } from '@components/Header'
 import { Loader } from '@components/Loader'
 import { WeatherContainer } from '@components/WeatherContainer'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
 import { getLocationByIPPending } from '@store/reducers/locationReducer'
 
-import { CentralContainer, Content, Wrapper } from './styled'
+import { CentralContainer, CentralHelper, Content, Wrapper } from './styled'
 
 export const HomePage = () => {
   const dispatch = useAppDispatch()
@@ -27,8 +28,11 @@ export const HomePage = () => {
       <Content currentBackground={currentBackground}>
         <Header />
         <CentralContainer>
-          <Calendar />
-          <ApiSelector />
+          <CentralHelper>
+            <GoogleControls />
+            <ApiSelector />
+          </CentralHelper>
+          <EventsContainer />
         </CentralContainer>
         <WeatherContainer />
       </Content>

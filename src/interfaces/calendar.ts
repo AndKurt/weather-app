@@ -5,7 +5,7 @@ interface IDate {
   timeZone: string
 }
 
-interface Item {
+export interface ICalendarItem {
   summary: string
   start: IFormatedDate
   end: IFormatedDate
@@ -65,5 +65,5 @@ export interface IGoogleCalendarResponce {
 
 // -----------Google Calendar  sorted data---------
 export interface IGoogleCalendarSorted {
-  items: Item[]
+  items: ICalendarItem[]
 }

@@ -1,4 +1,4 @@
-export interface IActioWorker {
+export interface IActionWorker {
   type: string
   payload: string
 }

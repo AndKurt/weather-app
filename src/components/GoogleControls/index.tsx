@@ -1,41 +1,37 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react'
+/* eslint-disable object-curly-newline */
+import React, { useEffect } from 'react'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from 'react-google-login'
 
 import { gapi } from 'gapi-script'
 
-import { fetchCalendar } from '@api/calendarApi'
 import { BASE_URL, GOOGLE_CLIENT_ID } from '@constants/api'
-import { ProfileObj } from '@interfaces/googleInit'
-import { getSortedCalendarData } from '@utils/calendar'
-// import { useAppDispatch } from '@store/hooks'
-// import { setGoogleToken } from '@store/reducers/generalReducer'
+import { useAppDispatch, useAppSelector } from '@store/hooks'
+import {
+  getCalendarDataPending,
+  getCalendarDataRejected,
+  setIsGoogleAuth,
+  setUserData,
+} from '@store/reducers/calendarReducer'
 
-export const Calendar = () => {
-  const [profile, setProfile] = useState<ProfileObj | null>(null)
-  // const dispatch = useAppDispatch()
+export const GoogleControls = () => {
+  const dispatch = useAppDispatch()
+  const { isAuth } = useAppSelector((state) => state.calendarReducer)
 
   const onSuccess = async (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    setProfile((res as GoogleLoginResponse).profileObj)
+    const userData = (res as GoogleLoginResponse).profileObj
     const { accessToken } = res as GoogleLoginResponse
     if (accessToken) {
-      // dispatch(setGoogleToken(accessToken))
-      const data = await fetchCalendar(accessToken)
-      if (data instanceof Error) {
-        console.log('error')
-      } else {
-        console.log(getSortedCalendarData(data))
-      }
+      dispatch({ type: getCalendarDataPending.type, payload: { accessToken, userData } })
     }
   }
 
-  const onFailure = (err: unknown) => {
-    console.log('failed', err)
+  const onFailure = (err: { error: string }) => {
+    dispatch(getCalendarDataRejected(err.error))
   }
 
   const handlelogOut = () => {
-    setProfile(null)
-    // dispatch(setGoogleToken(''))
+    dispatch(setUserData(null))
+    dispatch(setIsGoogleAuth(false))
   }
 
   useEffect(() => {
@@ -50,7 +46,7 @@ export const Calendar = () => {
 
   return (
     <div>
-      {profile ? (
+      {isAuth ? (
         <GoogleLogout clientId={GOOGLE_CLIENT_ID} buttonText="Log out" onLogoutSuccess={handlelogOut} />
       ) : (
         <GoogleLogin

@@ -53,9 +53,9 @@ const SPACES = {
 const WIDTH = {
   MAX: '1200px',
   MIN: '300px',
-  DATE_MAX: '32%',
-  LOCATION_MAX: '30%',
-  SELECTOR: '170px',
+  DATE_MAX: '40%',
+  LOCATION_MAX: '40%',
+  SELECTOR: '190px',
 }
 
 // Height
