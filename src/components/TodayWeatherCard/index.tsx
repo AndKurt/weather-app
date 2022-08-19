@@ -21,7 +21,7 @@ export const TodayWeatherCard = () => {
   const iconName =
     isOpenweatherApi || stormglassError ? openWeatherData?.current.weather.icon : stormglassData?.current.weather.icon
 
-  if (temperature && iconName) return null
+  if (!temperature && !iconName) return null
 
   return (
     <Wrapper>

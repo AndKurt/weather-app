@@ -48,3 +48,10 @@ export const InputCity = styled.input.attrs<IInputCity>({
     height: ${({ theme }) => theme.LINE_HEIGHT.M};
   }
 `
+
+export const ErrorMessage = styled.p`
+  color: ${({ theme }) => theme.COLOR.ERROR};
+  font-size: ${({ theme }) => theme.FONT_SIZE.M};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT[500]};
+  margin-bottom: ${({ theme }) => theme.SPACES[5]}px;
+`

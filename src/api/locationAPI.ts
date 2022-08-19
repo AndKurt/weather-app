@@ -5,8 +5,8 @@ import { ILocationCityNameResponce, ILocationIPResponce } from '@interfaces/loca
 
 export const fetchLocationByIP = async (): Promise<ILocationIPResponce | Error> => {
   try {
-    const { data } = await axios.get(GEO_BY_IP_URL)
-    return data
+    const response = await fetch(GEO_BY_IP_URL).then((data) => data.json())
+    return response
   } catch (error) {
     throw Error('Nothing found')
   }
@@ -14,11 +14,16 @@ export const fetchLocationByIP = async (): Promise<ILocationIPResponce | Error> 
 
 export const fetchLocationByCityName = async (cityName: string): Promise<ILocationCityNameResponce | Error> => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axios.get<ILocationCityNameResponce>(
       `${BASE_URL.POSITIONSTACK}/forward?access_key=${API_KEY.POSITIONSTACK}&query=${cityName}`,
     )
+
+    if (!data.data.length) {
+      return new Error('Nothing found')
+    }
+
     return data
   } catch (error) {
-    throw Error('Nothing found')
+    return new Error('Something went wrong. Try again')
   }
 }

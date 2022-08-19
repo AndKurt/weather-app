@@ -11,6 +11,7 @@ import {
   getLocationByCityNameRejected,
   getLocationByCityNameFullfield,
   getLocationByCityNamePending,
+  resetLocationError,
 } from '@store/reducers/locationReducer'
 
 import { getCurrentWeather } from './weatherSaga'

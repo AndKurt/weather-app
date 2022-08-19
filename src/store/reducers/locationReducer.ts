@@ -47,8 +47,10 @@ const locationSlice = createSlice({
     },
     getLocationByCityNameRejected(state, { payload }: PayloadAction<string>) {
       state.isLoading = false
-      state.locationData = null
       state.errorMsg = payload
+    },
+    resetLocationError(state) {
+      state.errorMsg = ''
     },
   },
 })
@@ -61,4 +63,5 @@ export const {
   getLocationByCityNamePending,
   getLocationByCityNameFullfield,
   getLocationByCityNameRejected,
+  resetLocationError,
 } = locationSlice.actions

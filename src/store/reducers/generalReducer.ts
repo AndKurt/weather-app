@@ -1,8 +1,8 @@
 /* eslint-disable operator-linebreak */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import baseBg from '@assets/img/baseBg.jpg'
-import contenBg from '@assets/img/contenBg.jpg'
+import baseBg from '@assets/img/baseBg.webp'
+import contenBg from '@assets/img/contenBg.webp'
 import { apiOptions } from '@constants/api'
 import { IApiOptions } from '@interfaces/apiOptions'
 import { IBackgrounds, IUnsplashResponse } from '@interfaces/unsplash'

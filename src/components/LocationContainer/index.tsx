@@ -1,15 +1,19 @@
+/* eslint-disable consistent-return */
 import React, { ChangeEvent, useEffect, useState, KeyboardEvent } from 'react'
 import useOnclickOutside from 'react-cool-onclickoutside'
 
+import { Delayed } from '@components/Delayed'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
-import { getLocationByCityNamePending } from '@store/reducers/locationReducer'
+import { getLocationByCityNamePending, resetLocationError } from '@store/reducers/locationReducer'
 import { resetWeaterStoreForUpdate } from '@store/reducers/weatherReducer'
 
-import { City, Country, InputCity, Wrapper } from './styled'
+import { City, Country, ErrorMessage, InputCity, Wrapper } from './styled'
+
+const DELAY_FOR_REMOVE_ERROR = 2000
 
 export const LocationContainer = () => {
   const dispatch = useAppDispatch()
-  const { locationData } = useAppSelector((state) => state.locationReducer)
+  const { locationData, errorMsg } = useAppSelector((state) => state.locationReducer)
 
   const [isEditCity, setIsEditCity] = useState<boolean>(false)
   const [cityName, setCityName] = useState<string>(locationData?.city as string)
@@ -17,6 +21,14 @@ export const LocationContainer = () => {
   useEffect(() => {
     setCityName(locationData?.city as string)
   }, [locationData])
+
+  useEffect(() => {
+    if (errorMsg) {
+      setTimeout(() => {
+        dispatch(resetLocationError())
+      }, DELAY_FOR_REMOVE_ERROR)
+    }
+  }, [dispatch, errorMsg])
 
   useEffect(() => {
     if (cityName !== locationData?.city && !isEditCity) {
@@ -49,10 +61,10 @@ export const LocationContainer = () => {
   return (
     <Wrapper>
       {!isEditCity ? (
-        <City onClick={handleOpenEdit}>{cityName}</City>
+        <City onClick={handleOpenEdit}>{locationData?.city}</City>
       ) : (
         <InputCity
-          defaultValue={cityName}
+          defaultValue={locationData?.city}
           ref={handleCloseEdit}
           onChange={handleRenameCity}
           onKeyDown={handleCloseEditByBtn}
@@ -60,6 +72,11 @@ export const LocationContainer = () => {
         />
       )}
       <Country>{locationData?.country}</Country>
+      {errorMsg && (
+        <Delayed delay={DELAY_FOR_REMOVE_ERROR}>
+          <ErrorMessage>{errorMsg}</ErrorMessage>
+        </Delayed>
+      )}
     </Wrapper>
   )
 }

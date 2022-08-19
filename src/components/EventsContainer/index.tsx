@@ -20,7 +20,7 @@ export const EventsContainer = () => {
       <Wrapper>
         {calendarData &&
           calendarData.items.map(({ end, start, summary }: ICalendarItem) => (
-            <EventItem key={summary} end={end} start={start} summary={summary} />
+            <EventItem key={`${summary}${start}`} end={end} start={start} summary={summary} />
           ))}
       </Wrapper>
     </>
