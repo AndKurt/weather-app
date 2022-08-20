@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from 'react-google-login'
 
 import { googleInit } from '@api/calendarApi'
-import { BASE_URL, GOOGLE_CLIENT_ID } from '@constants/api'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
 import {
   getCalendarDataPending,
@@ -11,6 +10,8 @@ import {
   setIsGoogleAuth,
   setUserData,
 } from '@store/reducers/calendarReducer'
+
+// const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID as string
 
 export const GoogleControls = () => {
   const dispatch = useAppDispatch()
@@ -40,10 +41,14 @@ export const GoogleControls = () => {
   return (
     <div>
       {isAuth ? (
-        <GoogleLogout clientId={GOOGLE_CLIENT_ID} buttonText="Log out" onLogoutSuccess={handlelogOut} />
+        <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
+          buttonText="Log out"
+          onLogoutSuccess={handlelogOut}
+        />
       ) : (
         <GoogleLogin
-          clientId={GOOGLE_CLIENT_ID}
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
           buttonText="Sign to Google Calendar"
           onSuccess={onSuccess}
           onFailure={onFailure}

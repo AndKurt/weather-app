@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Label } from '@components/Label'
-import { BASE_URL } from '@constants/api'
 
 import { Temperature, WeatherImg, Wrapper } from './styled'
 
@@ -14,7 +13,10 @@ interface INextWeatherCard {
 export const NextWeatherCard = ({ iconName, dayName, temperature }: INextWeatherCard) => (
   <Wrapper>
     <Label text={dayName} />
-    <WeatherImg src={`${BASE_URL.OPENWEATHERMAP_IMG}/${iconName}@2x.png`} alt="weater-icon" />
+    <WeatherImg
+      src={`${process.env.REACT_APP_API_BASE_URL_OPENWEATHERMAP_IMG as string}/${iconName}@2x.png`}
+      alt="weater-icon"
+    />
     <Temperature>
       {temperature}
       &deg;

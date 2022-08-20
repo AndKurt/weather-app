@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-import { API_KEY, BASE_URL } from '@constants/api'
 import { DAYS_AMOUNT } from '@constants/common'
 import { IOpenweatherResponse } from '@interfaces/openWeather'
 import { getNextWeekdayDate } from '@utils/timeDate'
@@ -8,7 +7,11 @@ import { getNextWeekdayDate } from '@utils/timeDate'
 export const fetchOpenweather = async (latitude: string, longitude: string): Promise<IOpenweatherResponse | Error> => {
   try {
     const { data } = await axios.get(
-      `${BASE_URL.OPENWEATHERMAP}/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,alerts&appid=${API_KEY.OPENWEATHERMAP}&units=metric`,
+      `${
+        process.env.REACT_APP_API_BASE_URL_OPENWEATHERMAP as string
+      }/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,alerts&appid=${
+        process.env.REACT_APP_API_KEY_OPENWEATHERMAP as string
+      }&units=metric`,
     )
     return data
   } catch (error) {
@@ -20,8 +23,10 @@ export const fetchStormglass = async (latitude: string, longitude: string): Prom
   try {
     const nextDay = getNextWeekdayDate(DAYS_AMOUNT)
     const { data } = await axios.get(
-      `${BASE_URL.STORMGLASS}?lat=${latitude}&lng=${longitude}&end=${nextDay}&params=airTemperature&source=sg`,
-      { headers: { Authorization: API_KEY.STORMGLASS } },
+      `${
+        process.env.REACT_APP_API_BASE_URL_STORMGLASS as string
+      }?lat=${latitude}&lng=${longitude}&end=${nextDay}&params=airTemperature&source=sg`,
+      { headers: { Authorization: process.env.REACT_APP_API_KEY_STORMGLASS as string } },
     )
     return data
   } catch (error) {

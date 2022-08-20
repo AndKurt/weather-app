@@ -5,7 +5,7 @@ import useOnclickOutside from 'react-cool-onclickoutside'
 import { Delayed } from '@components/Delayed'
 import { useAppDispatch, useAppSelector } from '@store/hooks'
 import { getLocationByCityNamePending, resetLocationError } from '@store/reducers/locationReducer'
-import { resetWeaterStoreForUpdate } from '@store/reducers/weatherReducer'
+import { resetWeaterStoreForUpdate, setPrevCity } from '@store/reducers/weatherReducer'
 
 import { City, Country, ErrorMessage, InputCity, Wrapper } from './styled'
 
@@ -33,6 +33,7 @@ export const LocationContainer = () => {
   useEffect(() => {
     if (cityName !== locationData?.city && !isEditCity) {
       dispatch(resetWeaterStoreForUpdate())
+      dispatch(setPrevCity(locationData?.city as string))
       dispatch({ type: getLocationByCityNamePending.type, payload: cityName })
     }
   }, [isEditCity])

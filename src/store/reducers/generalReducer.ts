@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import baseBg from '@assets/img/baseBg.webp'
 import contenBg from '@assets/img/contenBg.webp'
-import { apiOptions } from '@constants/api'
+import { apiOptions } from '@constants/common'
 import { IApiOptions } from '@interfaces/apiOptions'
 import { IBackgrounds, IUnsplashResponse } from '@interfaces/unsplash'
 

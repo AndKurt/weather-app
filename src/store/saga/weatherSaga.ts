@@ -17,6 +17,7 @@ import {
   getstormGlassDataPending,
   getstormGlassDataRejected,
   IWeatherState,
+  setPrevCity,
 } from '@store/reducers/weatherReducer'
 import { selectState } from '@utils/sagaHelpers'
 import {
@@ -30,7 +31,7 @@ import { getBackgrounds } from './generalSaga'
 
 export const getCurrentWeather = function* () {
   const { locationData }: ILocationState = yield selectState<ILocationState>((state) => state.locationReducer)
-  const { openWeatherData, openweatherLastUpdate, stormglassLastUpdate }: IWeatherState =
+  const { openWeatherData, openweatherLastUpdate, stormglassLastUpdate, prevCity }: IWeatherState =
     yield selectState<IWeatherState>((state) => state.weatherReducer)
   const currentDate = getUpdatedTime()
 
@@ -40,7 +41,13 @@ export const getCurrentWeather = function* () {
 
   const isOpenweatherApi = currentApi.value === API_NAME.OPENWEATHER
 
-  if (openweatherLastUpdate?.day !== currentDate.day || openweatherLastUpdate.hour + 1 < currentDate.hour) {
+  let openWeatherDataCurrent: IWeatherStoreData | null = null
+
+  if (
+    openweatherLastUpdate?.day !== currentDate.day ||
+    openweatherLastUpdate.hour + 1 < currentDate.hour ||
+    (prevCity && prevCity !== locationData?.city)
+  ) {
     yield put(getOpenweatherDataPending())
     const responseOpenweather: IOpenweatherResponse | Error = yield call(fetchOpenweather, latitude, longitude)
 
@@ -48,7 +55,9 @@ export const getCurrentWeather = function* () {
       yield put(getOpenweatherDataRejected(responseOpenweather.message))
     } else {
       const convertedData = getTransformedDataOpenweather(responseOpenweather)
+      openWeatherDataCurrent = convertedData
       yield put(getOpenweatherDataFullfield(convertedData))
+      yield put(setPrevCity(locationData?.city as string))
       yield call(getBackgrounds)
     }
   }
@@ -62,10 +71,15 @@ export const getCurrentWeather = function* () {
         yield put(getstormGlassDataRejected(responseStormglass.message))
       } else {
         const sortedStormglassData = sortStormglassData(responseStormglass)
-        const convertedData = addDataToStormglassData(sortedStormglassData, openWeatherData as IWeatherStoreData)
+        const convertedData = addDataToStormglassData(
+          sortedStormglassData,
+          openWeatherDataCurrent || (openWeatherData as IWeatherStoreData),
+        )
         yield put(getstormGlassDataFullfield(convertedData))
+        if (prevCity && prevCity !== locationData?.city) {
+          yield call(getBackgrounds)
+        }
       }
-      yield call(getBackgrounds)
     }
   }
 }

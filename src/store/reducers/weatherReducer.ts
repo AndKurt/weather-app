@@ -5,6 +5,7 @@ import { getUpdatedTime } from '@utils/weatherHelpers'
 
 export interface IWeatherState {
   isLoading: boolean
+  prevCity: string
   openWeatherData: IWeatherStoreData | null
   openweatherLastUpdate: IWeatherLastUpdate | null
   openweatherError: string
@@ -15,6 +16,7 @@ export interface IWeatherState {
 
 const initialState: IWeatherState = {
   isLoading: false,
+  prevCity: '',
   openWeatherData: null,
   openweatherLastUpdate: null,
   openweatherError: '',
@@ -58,10 +60,16 @@ const weatherSlice = createSlice({
       state.stormglassError = payload
     },
     resetWeaterStoreForUpdate(state) {
+      // state.openWeatherData = null
       state.openweatherLastUpdate = null
       state.openweatherError = ''
+
+      // state.stormglassData = null
       state.stormglassLastUpdate = null
       state.stormglassError = ''
+    },
+    setPrevCity(state, { payload }: PayloadAction<string>) {
+      state.prevCity = payload
     },
   },
 })
@@ -75,4 +83,5 @@ export const {
   getstormGlassDataFullfield,
   getstormGlassDataRejected,
   resetWeaterStoreForUpdate,
+  setPrevCity,
 } = weatherSlice.actions

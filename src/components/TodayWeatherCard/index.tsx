@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Label } from '@components/Label'
-import { BASE_URL } from '@constants/api'
 import { API_NAME } from '@constants/common'
 import { useAppSelector } from '@store/hooks'
 
@@ -25,7 +24,10 @@ export const TodayWeatherCard = () => {
 
   return (
     <Wrapper>
-      <WeatherImg src={`${BASE_URL.OPENWEATHERMAP_IMG}/${iconName}@2x.png`} alt="weater-icon" />
+      <WeatherImg
+        src={`${process.env.REACT_APP_API_BASE_URL_OPENWEATHERMAP_IMG as string}/${iconName}@2x.png`}
+        alt="weater-icon"
+      />
       <TextContainer>
         <Label text="Today" />
         <Temperature>
